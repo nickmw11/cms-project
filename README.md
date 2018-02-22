@@ -7,7 +7,7 @@ To set up the project and install Nodejs and Express:
 3. Launch Nodejs
 4. In the prompt, type: npm install express --save
 5. After the install finishes, from a regular command prompt navigate to the directory you saved the files in
-6. In the prompt, type: set DEBUG=myapp:* & npm start
+6. In the prompt, type: set DEBUG=cmsproject:* & npm start
 7. In the browser, go to http://localhost:3000/
 8. A page that says Express Welcome to Express should appear
 
