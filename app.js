@@ -4,7 +4,15 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
+var passport = require('passport');
+var flash    = require('connect-flash');
 
+var morgan = require('morgan');
+
+var session = require('express-session');
+
+var configDB = require('./config/database.js');
 var index = require('./routes/index');
 var users = require('./routes/users');
 
