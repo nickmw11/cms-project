@@ -7,12 +7,30 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var passport = require('passport');
 var flash    = require('connect-flash');
+var mysql = require('mysql');
 
 var morgan = require('morgan');
 
 var session = require('express-session');
 
 var configDB = require('./config/database.js');
+
+//mysql connection
+
+// Credentials
+var mysqlConnect = mysql.createConnection({
+    host: "sql9.freesqldatabase.com",
+    user: "sql9229224",
+    password: "6m2d4QZdzj",
+    database: "sql9229224"
+  });
+  
+// mysql connection
+var query = "Select * from Articles"
+mysqlConnect.query(query, function (err, result, fields) {
+  if (err) throw err;
+  console.log(result);
+});
 
 // pages
 var index = require('./routes/index');
@@ -41,6 +59,12 @@ app.use('/customermessages', customermessages);
 
 // Response to ajax call to the customermessage page
 app.get('/message', function(req, res) {
+  
+  var query = "Select * from contactus"
+  mysqlConnect.query(query, function (err, result, fields) {
+    if (err) throw err;
+    console.log(result);
+  });
   res.send("<p>Reply to ajax call from server, updating once every second.</p>" + Date());
 });
 
