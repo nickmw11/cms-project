@@ -7,7 +7,6 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var passport = require('passport');
 var flash    = require('connect-flash');
-const mysql = require('mysql');
 
 var morgan = require('morgan');
 
@@ -21,23 +20,6 @@ var article = require('./routes/article');
 var customermessages = require('./routes/customermessages');
 var users = require('./routes/users');
 
-// mysql connection
-
-// Credentials
-// var mysqlConnect = mysql.createConnection({
-    // host: "sql9.freesqldatabase.com",
-    // user: "sql9229224",
-    // password: "6m2d4QZdzj",
-    // database: "sql9229224"
-  // });
-  
-// // mysql connection
-// var query = "Select * from Articles"
-// mysqlConnect.connect(function(err) {if (err) throw err;});
-        // mysqlConnect.query(query, function (err, result, fields) {
-          // if (err) throw err;
-          // console.log(result);
-        // });
 var app = express();
 
 // view engine setup
