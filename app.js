@@ -13,8 +13,11 @@ var morgan = require('morgan');
 var session = require('express-session');
 
 var configDB = require('./config/database.js');
+
+// pages
 var index = require('./routes/index');
-var article = require('./routes/article')
+var article = require('./routes/article');
+var customermessages = require('./routes/customermessages');
 var users = require('./routes/users');
 
 var app = express();
@@ -31,8 +34,15 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// pages
 app.use('/', index);
 app.use('/article', article);
+app.use('/customermessages', customermessages);
+
+// Response to ajax call to the customermessage page
+app.get('/message', function(req, res) {
+  res.send("<p>Reply to ajax call from server, updating once every second.</p>" + Date());
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -49,7 +59,7 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.render('./pages/error');
 });
 
 module.exports = app;

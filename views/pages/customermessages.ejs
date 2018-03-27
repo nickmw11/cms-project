@@ -1,0 +1,49 @@
+<!-- views/pages/index.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <% include ../partials/head %>
+</head>
+<body class="container">
+
+<header>
+    <% include ../partials/header %>
+</header>
+
+<main>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="jumbotron">
+                <h1>Customer Messagess</h1>
+                <p>This page contains customer messages</p>
+                <p id="demo"></p>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer>
+    <% include ../partials/footer %>
+</footer>
+
+<script>
+    // Recurring call to loadDoc() every seconds
+    $(document).ready(function() {
+        setInterval("loadDoc()",1000);
+    });
+
+    // call to node server
+    function loadDoc() {
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          document.getElementById("demo").innerHTML = this.responseText;
+        }
+      };
+      xhttp.open("GET", "/message", true);
+      xhttp.send();
+    }
+</script>
+</body>
+</html>
