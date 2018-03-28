@@ -8,14 +8,11 @@ var mongoose = require('mongoose');
 var passport = require('passport');
 var flash    = require('connect-flash');
 var mysql = require('mysql');
-
 var morgan = require('morgan');
-
 var session = require('express-session');
-
 var configDB = require('./config/database.js');
 
-//mysql connection
+// mysql connection
 
 // Credentials
 var mysqlConnect = mysql.createConnection({
@@ -25,18 +22,12 @@ var mysqlConnect = mysql.createConnection({
     database: "sql9229224"
   });
   
-// mysql connection
+// mysql test query connection
 var query = "Select * from Articles"
 mysqlConnect.query(query, function (err, result, fields) {
   if (err) throw err;
   console.log(result);
 });
-
-// pages
-var index = require('./routes/index');
-var article = require('./routes/article');
-var customermessages = require('./routes/customermessages');
-var users = require('./routes/users');
 
 var app = express();
 
@@ -52,14 +43,21 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// routes
+var index = require('./routes/index');
+var article = require('./routes/article');
+var customermessages = require('./routes/customermessages');
+var post = require('./routes/post');
+var users = require('./routes/users');
+
 // pages
 app.use('/', index);
 app.use('/article', article);
 app.use('/customermessages', customermessages);
+app.use('/post', post);
 
 // Response to ajax call to the customermessage page
 app.get('/message', function(req, res) {
-  
   var query = "Select * from contactus"
   mysqlConnect.query(query, function (err, result, fields) {
     if (err) throw err;
