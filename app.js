@@ -12,6 +12,8 @@ var morgan = require('morgan');
 var session = require('express-session');
 var configDB = require('./config/database.js');
 
+var app = express();
+
 // mysql connection
 
 // Credentials
@@ -22,14 +24,6 @@ var mysqlConnect = mysql.createConnection({
     database: "sql9229224"
   });
 
-// mysql test query connection
-var query = "Select * from Articles"
-mysqlConnect.query(query, function (err, result, fields) {
-  if (err) throw err;
-  console.log(result);
-});
-
-var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -67,12 +61,28 @@ app.get('/message', function(req, res) {
   res.send("<p>Reply to ajax call from server, updating once every second.</p>" + Date());
 });
 
+// This gets the form input from the articles page in req.body
 app.post('/submitArticle', function(req, res) {
   console.log(req.body.articleTitle);
   console.log(req.body.articleAuthor);
   console.log(req.body.articleContent);
   console.log(req.body.articleDate);
-  res.send("<p>Article successfully submitted!</p>");
+
+  title = req.body.articleTitle;
+  author = req.body.articleAuthor;
+  content = req.body.articleContent;
+  date = req.body.articleDate;
+
+  // Replaces single quotes with 2 single quotes so that it won't mess up the query.
+  title = title.replace(/'/g,"''");
+  author = author.replace(/'/g,"''");
+  content = content.replace(/'/g,"''");
+
+  var query = "INSERT INTO Articles (title,author,date,content) VALUES ('" + title + "','" + author + "','" + date + "','" + content + "');";
+  mysqlConnect.query(query, function (err, result, fields) {
+    if (err) throw err;
+    else res.send("<p>Article successfully submitted!</p>");
+  })
   });
 
 
