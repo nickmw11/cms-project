@@ -21,7 +21,7 @@ var mysqlConnect = mysql.createConnection({
     password: "6m2d4QZdzj",
     database: "sql9229224"
   });
-  
+
 // mysql test query connection
 var query = "Select * from Articles"
 mysqlConnect.query(query, function (err, result, fields) {
@@ -50,6 +50,7 @@ var customermessages = require('./routes/customermessages');
 var post = require('./routes/post');
 var users = require('./routes/users');
 
+
 // pages
 app.use('/', index);
 app.use('/article', article);
@@ -66,12 +67,24 @@ app.get('/message', function(req, res) {
   res.send("<p>Reply to ajax call from server, updating once every second.</p>" + Date());
 });
 
+app.post('/submitArticle', function(req, res) {
+  console.log(req.body.articleTitle);
+  console.log(req.body.articleAuthor);
+  console.log(req.body.articleContent);
+  console.log(req.body.articleDate);
+  res.send("<p>Article successfully submitted!</p>");
+  });
+
+
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
+
+
 
 // error handler
 app.use(function(err, req, res, next) {
@@ -83,6 +96,8 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('./pages/error');
 });
+
+
 
 module.exports = app;
 

@@ -9,14 +9,36 @@
     </header>
 	<main>
     <div class="row">
+
         <div class="col-sm-12">
             <div class="jumbotron">
-                <h2>Create an Article</h2>
-                <p>This should contain input boxes for an article</p>
+              <h3><p class="text-center">Submit New Article</p></h3>
+                  <form method="POST" action="/submitArticle">
+                    <div class="form-group">
+                            <label for="articleTitle">Article Title:  </label>
+                            <input type="text" class="form-control" name="articleTitle" id="articleTitle">
+                    </div>
+                    <div class="form-group">
+                            <label for="articleAuthor">Article Author:  </label>
+                            <input type="text" class="form-control" name="articleAuthor" id="articleAuthor">
+                    </div>
+                    <div class="form-group">
+                            <label for="articleContent">Article Content:  </label>
+                            <textarea class="form-control" name="articleContent" id="articleContent" rows="8"></textarea>
+                    </div>
+                    <div class="form-group">
+                            <label for="articleDate">Article Date:  </label>
+                            <input type="date" class="form-control" name="articleDate" id="articleDate">
+                    </div>
+                      <p class="text-center"><button type="submit" class="btn">Submit Article</button></p>
+                  </form>
             </div>
         </div>
     </div>
 </main>
+
+
+
 
 <footer>
     <% include ../partials/footer %>

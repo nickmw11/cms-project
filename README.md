@@ -1,5 +1,14 @@
 # cms-project
 
+Recommended NPM install - Nodemon
+
+npm install -g nodemon to install
+nodemon app.js to launch
+
+Automatically restarts the server when a file is saved
+
+
+
 To set up the project and install Nodejs and Express:
 
 1. Download the project files and extract to a folder
