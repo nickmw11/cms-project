@@ -43,6 +43,7 @@ var article = require('./routes/article');
 var customermessages = require('./routes/customermessages');
 var post = require('./routes/post');
 var users = require('./routes/users');
+var jobpostings = require('./routes/jobpostings');
 
 
 // pages
@@ -50,6 +51,7 @@ app.use('/', index);
 app.use('/article', article);
 app.use('/customermessages', customermessages);
 app.use('/post', post);
+app.use('/jobpostings', jobpostings);
 
 // Response to ajax call to the customermessage page
 app.get('/message', function(req, res) {
@@ -85,7 +87,28 @@ app.post('/submitArticle', function(req, res) {
   })
   });
 
+// This gets the form input from the job postings page in req.body
+  app.post('/submitjobpostings', function(req, res) {
+    console.log(req.body.jobTitle);
+    console.log(req.body.jobDescription);
+    console.log(req.body.jobRequirements);
 
+
+    title = req.body.jobTitle;
+    description = req.body.jobDescription;
+    requirements = req.body.jobRequirements;
+
+    // Replaces single quotes with 2 single quotes so that it won't mess up the query.
+    title = title.replace(/'/g,"''");
+    description = description.replace(/'/g,"''");
+    requirements = requirements.replace(/'/g,"''");
+
+    var query = "INSERT INTO jobpostings (title,description,requirements) VALUES ('" + title + "','" + description + "','" + requirements + "');";
+    mysqlConnect.query(query, function (err, result, fields) {
+      if (err) throw err;
+      else res.send("<p>Job Posting successfully submitted!</p>");
+    })
+    });
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<% include ../partials/head %>
+</head>
+<body class="container">
+    <header>
+        <% include ../partials/header %>
+    </header>
+	<main>
+    <div class="row">
+
+        <div class="col-sm-12">
+            <div class="jumbotron">
+              <h3><p class="text-center">Submit New Job Posting</p></h3>
+                  <form method="POST" action="/submitjobpostings">
+                    <div class="form-group">
+                            <label for="articleTitle">Job Title:  </label>
+                            <input type="text" class="form-control" name="jobTitle" id="jobTitle">
+                    </div>
+                    <div class="form-group">
+                            <label for="articleContent">Job Description:  </label>
+                            <textarea class="form-control" name="jobDescription" id="jobDescription" rows="8"></textarea>
+                    </div>
+                    <div class="form-group">
+                            <label for="articleContent">Job Requirements:  </label>
+                            <textarea class="form-control" name="jobRequirements" id="jobRequirements" rows="8"></textarea>
+                    </div>
+                      <p class="text-center"><button type="submit" class="btn">Submit Job Posting</button></p>
+                  </form>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+
+
+<footer>
+    <% include ../partials/footer %>
+</footer>
+  </body>
+</html>
