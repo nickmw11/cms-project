@@ -4,6 +4,7 @@
 <html lang="en">
 <head>
     <% include ../partials/head %>
+    <script type="text/javascript" src="javascript/customermessages.js"></script>
 </head>
 <body class="container">
 
@@ -17,7 +18,7 @@
             <div class="jumbotron">
                 <h1>Customer Messagess</h1>
                 <p>This page contains customer messages</p>
-                <p id="demo"></p>
+                <p id="messages"></p>
             </div>
         </div>
     </div>
@@ -28,22 +29,6 @@
 </footer>
 
 <script>
-    // Recurring call to loadDoc() every seconds
-    $(document).ready(function() {
-        setInterval("loadDoc()",1000);
-    });
-
-    // call to node server
-    function loadDoc() {
-      var xhttp = new XMLHttpRequest();
-      xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-          document.getElementById("demo").innerHTML = this.responseText;
-        }
-      };
-      xhttp.open("GET", "/message", true);
-      xhttp.send();
-    }
 </script>
 </body>
 </html>

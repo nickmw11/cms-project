@@ -15,14 +15,8 @@ var configDB = require('./config/database.js');
 var app = express();
 
 // mysql connection
-
-// Credentials
-var mysqlConnect = mysql.createConnection({
-    host: "sql9.freesqldatabase.com",
-    user: "sql9229224",
-    password: "6m2d4QZdzj",
-    database: "sql9229224"
-  });
+var configDB = require('./config/database.js');
+var mysqlConnect = mysql.createConnection(configDB.url);
 
 
 // view engine setup
@@ -53,16 +47,6 @@ app.use('/customermessages', customermessages);
 app.use('/post', post);
 app.use('/jobpostings', jobpostings);
 
-// Response to ajax call to the customermessage page
-app.get('/message', function(req, res) {
-  var query = "Select * from contactus"
-  mysqlConnect.query(query, function (err, result, fields) {
-    if (err) throw err;
-    console.log(result);
-  });
-  res.send("<p>Reply to ajax call from server, updating once every second.</p>" + Date());
-});
-
 // This gets the form input from the articles page in req.body
 app.post('/submitArticle', function(req, res) {
   console.log(req.body.articleTitle);
@@ -83,7 +67,7 @@ app.post('/submitArticle', function(req, res) {
   var query = "INSERT INTO Articles (title,author,date,content) VALUES ('" + title + "','" + author + "','" + date + "','" + content + "');";
   mysqlConnect.query(query, function (err, result, fields) {
     if (err) throw err;
-    else res.send("<p>Article successfully submitted!</p>");
+    else res.render("pages/confirmation");
   })
   });
 
@@ -106,9 +90,27 @@ app.post('/submitArticle', function(req, res) {
     var query = "INSERT INTO jobpostings (title,description,requirements) VALUES ('" + title + "','" + description + "','" + requirements + "');";
     mysqlConnect.query(query, function (err, result, fields) {
       if (err) throw err;
-      else res.send("<p>Job Posting successfully submitted!</p>");
+      else res.render("pages/confirmation");
     })
     });
+
+// Sends a reply to the customer messages page with messages pulled from the database
+app.get('/messages', function(req, res) {
+  var query = "Select * from contactus"
+  var resultString = "";
+
+  mysqlConnect.query(query, function (err, result, fields) {
+      if (err) throw err;
+
+      numRows = result.length;
+      var articleArray = [];
+      for (i = numRows - 1; i >= 0; i--) {
+      resultString = resultString + "<h2>Name: " + result[i].firstname + " " + result[i].lastname + "</h2><h4>" + "Email: " + result[i].email + "</h4><h4>Phone:" + result[i].phone + "</h4><h2>" + result[i].subjectofmessage + "</h2><p>" + result[i].bodyofmessage + "</p>";
+    }
+      res.send(resultString);
+  });
+});
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -116,8 +118,6 @@ app.use(function(req, res, next) {
   err.status = 404;
   next(err);
 });
-
-
 
 // error handler
 app.use(function(err, req, res, next) {
