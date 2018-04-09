@@ -38,6 +38,7 @@ var customermessages = require('./routes/customermessages');
 var post = require('./routes/post');
 var users = require('./routes/users');
 var jobpostings = require('./routes/jobpostings');
+var blog =require('./routes/blog');
 
 
 // pages
@@ -46,6 +47,7 @@ app.use('/article', article);
 app.use('/customermessages', customermessages);
 app.use('/post', post);
 app.use('/jobpostings', jobpostings);
+app.use('/blog', blog);
 
 // This gets the form input from the articles page in req.body
 app.post('/submitArticle', function(req, res) {
@@ -93,6 +95,29 @@ app.post('/submitArticle', function(req, res) {
       else res.render("pages/confirmation");
     })
     });
+
+    app.post('/submitBlog', function(req, res) {
+      console.log(req.body.blogTitle);
+      console.log(req.body.blogAuthor);
+      console.log(req.body.blogContent);
+      console.log(req.body.blogDate);
+    
+      title = req.body.blogTitle;
+      author = req.body.blogAuthor;
+      content = req.body.blogContent;
+      date = req.body.blogDate;
+    
+      // Replaces single quotes with 2 single quotes so that it won't mess up the query.
+      title = title.replace(/'/g,"''");
+      author = author.replace(/'/g,"''");
+      content = content.replace(/'/g,"''");
+    
+      var query = "INSERT INTO Blog (title,author,date,content) VALUES ('" + title + "','" + author + "','" + date + "','" + content + "');";
+      mysqlConnect.query(query, function (err, result, fields) {
+        if (err) throw err;
+        else res.render("pages/confirmation");
+      })
+      });
 
 // Sends a reply to the customer messages page with messages pulled from the database
 app.get('/messages', function(req, res) {

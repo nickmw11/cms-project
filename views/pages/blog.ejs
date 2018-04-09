@@ -1,0 +1,60 @@
+<!--views\pages\blog.ejs-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <% include ../partials/head %>
+</head>
+<body class="container">
+
+<header>
+    <% include ../partials/header %>
+</header>
+
+<main>
+    <div class="jumbotron">
+        <h1>Create a Blog Post</h1>
+        <p>Type in the information you would like to post, then click Post.</p>
+
+    <!--Here begins the start of the Post Making form-->
+    <form method="POST" action="/submitBlog">
+    <fieldset><legend>Create your blog here:</legend>
+      <!-- Box for post author -->
+      <div class="form-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="inputGroup-sizing-default"><b>Author Name:</b></span>
+            </div>
+            <input type="text" name="blogAuthor" class="form-control" placeholder="Enter your name" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+          </div><br>
+      <!-- Box for post title -->
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="inputGroup-sizing-default"><b>Title:</b></span>
+        </div>
+        <input type="text" name="blogTitle" class="form-control" placeholder="Enter your blog title" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+      </div><br>
+
+
+    <!--Below is the box for Post Body-->
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text"><b>Post Content:</b></span>
+        </div>
+        <textarea name="blogContent" class="form-control" placeholder="Type your content body here"aria-label="Default"></textarea>
+      </div><br>
+      <div class="form-group">
+        <label for="blogDate">Blog Date:  </label>
+        <input type="date" class="form-control" name="blogDate" id="blogDate">
+      </div>
+    </fieldset>
+      <button type="submit" class="btn btn-primary">Post to Blog</button><br>
+    </form>
+  </div>
+</main>
+
+<footer>
+  <% include ../partials/footer %>
+</footer>
+
+</body>
+</html>
