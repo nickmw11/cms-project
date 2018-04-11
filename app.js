@@ -20,9 +20,9 @@ var configDB = require('./config/database.js');
 
 var app = express();
 
-// mysql connection
+//mysql connection
 var configDB = require('./config/database.js');
-var mysqlConnect = mysql.createConnection(configDB.url);
+//var mysqlConnect = mysql.createConnection(configDB.url);
 
 
 // view engine setup
@@ -37,16 +37,16 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// routes
+// requiring routes
 var index = require('./routes/index');
 var article = require('./routes/article');
 var customermessages = require('./routes/customermessages');
 var post = require('./routes/post');
 var users = require('./routes/users');
 var jobpostings = require('./routes/jobpostings');
-var blog =require('./routes/blog');
+var blog = require('./routes/blog');
 
-// pages
+// using routs
 app.use('/', index);
 app.use('/article', article);
 app.use('/customermessages', customermessages);
@@ -54,37 +54,11 @@ app.use('/post', post);
 app.use('/jobpostings', jobpostings);
 app.use('/blog', blog);
 
-// This gets the form input from the articles page in req.body
-app.post('/submitArticle', function(req, res) {
-	console.log(req.body.articleTitle);
-	console.log(req.body.articleAuthor);
-	console.log(req.body.articleContent);
-	console.log(req.body.articleDate);
-
-	title = req.body.articleTitle;
-	author = req.body.articleAuthor;
-	content = req.body.articleContent;
-	date = req.body.articleDate;
-
-	// Replaces single quotes with 2 single quotes so that it won't mess up the query.
-	title = title.replace(/'/g,"''");
-	author = author.replace(/'/g,"''");
-	content = content.replace(/'/g,"''");
-
-	// sql query
-	var query = "INSERT INTO Articles (title,author,date,content) VALUES ('" + title + "','" + author + "','" + date + "','" + content + "');";
-	mysqlConnect.query(query, function (err, result, fields) {
-	if (err) throw err;
-	else res.render("pages/confirmation");
-	})
-});
-
 // This gets the form input from the job postings page in req.body
   app.post('/submitjobpostings', function(req, res) {
     console.log(req.body.jobTitle);
     console.log(req.body.jobDescription);
     console.log(req.body.jobRequirements);
-
 
     title = req.body.jobTitle;
     description = req.body.jobDescription;
@@ -96,7 +70,7 @@ app.post('/submitArticle', function(req, res) {
     requirements = requirements.replace(/'/g,"''");
 
     var query = "INSERT INTO jobpostings (title,description,requirements) VALUES ('" + title + "','" + description + "','" + requirements + "');";
-    mysqlConnect.query(query, function (err, result, fields) {
+    configDB.query(query, function (err, result, fields) {
       if (err) throw err;
       else res.render("pages/confirmation");
     })
@@ -119,7 +93,7 @@ app.post('/submitBlog', function(req, res) {
 	content = content.replace(/'/g,"''");
 
 	var query = "INSERT INTO Blog (title,author,date,content) VALUES ('" + title + "','" + author + "','" + date + "','" + content + "');";
-	mysqlConnect.query(query, function (err, result, fields) {
+	configDB.query(query, function (err, result, fields) {
 	if (err) throw err;
 	else res.render("pages/confirmation");
 	})
@@ -130,7 +104,7 @@ app.get('/messages', function(req, res) {
 	var query = "Select * from contactus"
 	var resultString = "";
 
-	mysqlConnect.query(query, function (err, result, fields) {
+	configDB.query(query, function (err, result, fields) {
 	  if (err) throw err;
 
 	  numRows = result.length;
