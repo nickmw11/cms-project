@@ -3,7 +3,7 @@
  * sets up the MySQL connection, contains routs to all main pages,
  * and has the code to recieve requests and submit form input to databases.
  */
- 
+
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -54,27 +54,6 @@ app.use('/post', post);
 app.use('/jobpostings', jobpostings);
 app.use('/blog', blog);
 
-// This gets the form input from the job postings page in req.body
-  app.post('/submitjobpostings', function(req, res) {
-    console.log(req.body.jobTitle);
-    console.log(req.body.jobDescription);
-    console.log(req.body.jobRequirements);
-
-    title = req.body.jobTitle;
-    description = req.body.jobDescription;
-    requirements = req.body.jobRequirements;
-
-    // Replaces single quotes with 2 single quotes so that it won't mess up the query.
-    title = title.replace(/'/g,"''");
-    description = description.replace(/'/g,"''");
-    requirements = requirements.replace(/'/g,"''");
-
-    var query = "INSERT INTO jobpostings (title,description,requirements) VALUES ('" + title + "','" + description + "','" + requirements + "');";
-    configDB.query(query, function (err, result, fields) {
-      if (err) throw err;
-      else res.render("pages/confirmation");
-    })
-});
 
 app.post('/submitBlog', function(req, res) {
 	console.log(req.body.blogTitle);
