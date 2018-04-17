@@ -25,9 +25,21 @@ var configDB = require('./config/database.js');
 //var mysqlConnect = mysql.createConnection(configDB.url);
 
 
+//connect to our databse
+mongoose.connect(configDB.url);
+
+// pass passport for configuration
+require('./config/passport')(passport);
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+
+//required for passport
+app.use(session({secret: 'sessionsecret' }));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash());
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -45,6 +57,10 @@ var post = require('./routes/post');
 var users = require('./routes/users');
 var jobpostings = require('./routes/jobpostings');
 var blog = require('./routes/blog');
+var login = require('./routes/login');
+var signup = require('./routes/signup');
+var profile = require('./routes/profile');
+var logout = require('./routes/logout');
 
 // using routs
 app.use('/', index);
@@ -53,7 +69,10 @@ app.use('/customermessages', customermessages);
 app.use('/post', post);
 app.use('/jobpostings', jobpostings);
 app.use('/blog', blog);
-
+app.use('/login', login);
+app.use('/signup', signup);
+app.use('./profile', profile);
+app.use('./logout', logout);
 
 app.post('/submitBlog', function(req, res) {
 	console.log(req.body.blogTitle);
