@@ -46,37 +46,13 @@ var users = require('./routes/users');
 var jobpostings = require('./routes/jobpostings');
 var blog = require('./routes/blog');
 
-// using routs
+// using routes
 app.use('/', index);
 app.use('/article', article);
 app.use('/customermessages', customermessages);
 app.use('/post', post);
 app.use('/jobpostings', jobpostings);
 app.use('/blog', blog);
-
-
-app.post('/submitBlog', function(req, res) {
-	console.log(req.body.blogTitle);
-	console.log(req.body.blogAuthor);
-	console.log(req.body.blogContent);
-	console.log(req.body.blogDate);
-
-	title = req.body.blogTitle;
-	author = req.body.blogAuthor;
-	content = req.body.blogContent;
-	date = req.body.blogDate;
-
-	// Replaces single quotes with 2 single quotes so that it won't mess up the query.
-	title = title.replace(/'/g,"''");
-	author = author.replace(/'/g,"''");
-	content = content.replace(/'/g,"''");
-
-	var query = "INSERT INTO Blog (title,author,date,content) VALUES ('" + title + "','" + author + "','" + date + "','" + content + "');";
-	configDB.query(query, function (err, result, fields) {
-	if (err) throw err;
-	else res.render("pages/confirmation");
-	})
-});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
