@@ -17,4 +17,7 @@ router.post('/', function(req, res, next) {
 // Create article
 router.post('/submitArticle', articleController.createArticle);
 
+// display articles
+router.get('/displayArticles', articleController.displayArticles);
+
 module.exports = router;

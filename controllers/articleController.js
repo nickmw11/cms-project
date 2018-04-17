@@ -5,7 +5,7 @@
  */
 
 // mysql connection
-var configDB = require('../config/database.js');
+var mysqlConnect = require('../config/database.js');
 
 exports.createArticle = function(req, res){
     console.log(req.body.articleTitle);
@@ -24,8 +24,23 @@ exports.createArticle = function(req, res){
 	content = content.replace(/'/g,"''");
 	// sql query
 	var query = "INSERT INTO Articles (title,author,date,content) VALUES ('" + title + "','" + author + "','" + date + "','" + content + "');";
-	configDB.query(query, function (err, result, fields) {
+	mysqlConnect.query(query, function (err, result, fields) {
 	if (err) throw err;
 	else res.render("pages/confirmation");
     })
 };
+
+exports.displayArticles = function (req, res){
+	var query = "Select * from Articles"
+	var resultString = "";
+
+	mysqlConnect.query(query, function (err, result, fields) {
+		if (err) throw err;
+		numRows = result.length;
+		var articleArray = [];
+		for (i = numRows - 1; i >= 0; i--) {
+		resultString = resultString + " <div class=\"row\"><div class=\"col-lg-10 col-md-10 col-sm-8 col-xs-10\"><h3>" + result[i].Title + result[i].ID + "</h3><h5>" + "Author: " + result[i].Author + "</h5></div><div class=\"col-lg-2 col-md-2 col-sm-4 col-xs-2\"><input type=\"button\" onclick=\"deleteArticle(" + result[i].ID + ")\" value=\"Delete\" class=\"btn\"></input></div></div>";
+	}
+	res.send(resultString);
+});
+}

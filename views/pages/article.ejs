@@ -6,11 +6,12 @@
 <body class="container">
     <header>
         <% include ../partials/header %>
+        <script type="text/javascript" src="javascript/article.js"></script>
     </header>
 	<main>
     <div class="row">
 
-        <div class="col-sm-12">
+        <div class="col-sm-7">
             <div class="jumbotron">
               <h3><p class="text-center">Submit New Article</p></h3>
                   <form method="POST" action="/article/submitArticle">
@@ -38,12 +39,11 @@
                   </form>
             </div>
         </div>
+        <div class="col-sm-5">
+            <div class="jumbotron" id="articlePreview"></div>
+        </div>
     </div>
 </main>
-
-
-
-
 <footer>
     <% include ../partials/footer %>
 </footer>
