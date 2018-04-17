@@ -22,6 +22,6 @@ function loadCustomerMessages() {
         document.getElementById("messages").innerHTML = this.responseText;
     }
     };
-    xhttp.open("GET", "/messages", true);
+    xhttp.open("GET", "/customermessages/displayMessages", true);
     xhttp.send();
 }

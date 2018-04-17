@@ -78,23 +78,6 @@ app.post('/submitBlog', function(req, res) {
 	})
 });
 
-// Sends a reply to the customer messages page with messages pulled from the database
-app.get('/messages', function(req, res) {
-	var query = "Select * from contactus"
-	var resultString = "";
-
-	configDB.query(query, function (err, result, fields) {
-	  if (err) throw err;
-
-	  numRows = result.length;
-	  var articleArray = [];
-	  for (i = numRows - 1; i >= 0; i--) {
-	  resultString = resultString + "<h2>Name: " + result[i].firstname + " " + result[i].lastname + "</h2><h4>" + "Email: " + result[i].email + "</h4><h4>Phone:" + result[i].phone + "</h4><h2>" + result[i].subjectofmessage + "</h2><p>" + result[i].bodyofmessage + "</p>";
-	}
-	  res.send(resultString);
-	});
-});
-
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
