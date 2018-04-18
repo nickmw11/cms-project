@@ -21,13 +21,16 @@ exports.createArticle = function(req, res){
 	content = req.body.articleContent;
 	date = req.body.articleDate;
 	articleImage = req.body.articleImage;
+	
+
+	
 
 	// Replaces single quotes with 2 single quotes so that it won't mess up the query.
 	title = title.replace(/'/g,"''");
 	author = author.replace(/'/g,"''");
 	content = content.replace(/'/g,"''");
 	// sql query
-	var query = "INSERT INTO Articles (title,author,date,content) VALUES ('" + title + "','" + author + "','" + date + "','" + content + "');";
+	var query = "INSERT INTO Articles (title,author,date,content,image) VALUES ('" + title + "','" + author + "','" + date + "','" + content +  "','" + articleImage + "');";
 	mysqlConnect.query(query, function (err, result, fields) {
 	if (err) throw err;
 	else res.render("pages/confirmation");
