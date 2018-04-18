@@ -22,8 +22,6 @@ var app = express();
 
 //mysql connection
 var configDB = require('./config/database.js');
-//var mysqlConnect = mysql.createConnection(configDB.url);
-
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

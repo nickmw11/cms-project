@@ -34,6 +34,33 @@ function deleteArticle(id) {
     // };
     // xhttp.open("GET", "/article/deleteArticles", true);
     // xhttp.send();
-    alert('Hello world!');
     console.log(id);
+
+    $.post("/article/deleteArticles",
+    {
+      articleID: id
+    });
+
+    // $.ajax({
+    //     url: "/article/deleteArticles",
+
+    //     data: {
+    //         "articleID": id
+    //     },
+
+    //     contentType: 'application/json',
+
+    //     method: 'POST',
+
+    //     success:
+    //     function(data){
+    //         console.log("Successfully deleted article");
+    //         'GET'
+    //     },
+
+    //     error:
+    //     function(data){
+    //         console.log("Something bad happened");
+    //     }
+    // });
 }

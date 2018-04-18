@@ -20,4 +20,7 @@ router.post('/submitArticle', articleController.createArticle);
 // display articles
 router.get('/displayArticles', articleController.displayArticles);
 
+// delete article
+router.post('/deleteArticles', function(req, res, next){console.log("Yay!!!")});
+
 module.exports = router;
