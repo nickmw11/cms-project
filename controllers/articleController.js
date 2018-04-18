@@ -6,17 +6,21 @@
 
 // mysql connection
 var mysqlConnect = require('../config/database.js');
+const fileUpload = require('express-fileupload');
 
 exports.createArticle = function(req, res){
     console.log(req.body.articleTitle);
 	console.log(req.body.articleAuthor);
 	console.log(req.body.articleContent);
 	console.log(req.body.articleDate);
+	console.log(req.body.articleImage);
+
 
 	title = req.body.articleTitle;
 	author = req.body.articleAuthor;
 	content = req.body.articleContent;
 	date = req.body.articleDate;
+	articleImage = req.body.articleImage;
 
 	// Replaces single quotes with 2 single quotes so that it won't mess up the query.
 	title = title.replace(/'/g,"''");
