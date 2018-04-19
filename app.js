@@ -46,6 +46,7 @@ var post = require('./routes/post');
 var users = require('./routes/users');
 var jobpostings = require('./routes/jobpostings');
 var blog = require('./routes/blog');
+var about = require('./routes/about');
 
 // using routes
 app.use('/', index);
@@ -54,6 +55,7 @@ app.use('/customermessages', customermessages);
 app.use('/post', post);
 app.use('/jobpostings', jobpostings);
 app.use('/blog', blog);
+app.use('about', about);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
