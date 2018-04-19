@@ -26,6 +26,9 @@ router.post('/submitArticle', upload.single('articleImage'), articleController.c
 router.get('/displayArticles', articleController.displayArticles);
 
 // delete article
-router.post('/deleteArticles', function(req, res){console.log('body: ' + req.body.articleID);});
+router.post('/deleteArticles', articleController.deleteArticles);
+
+// toggle is_active on an article
+router.post('/toggleIsActive', articleController.toggleIsActive);
 
 module.exports = router;
