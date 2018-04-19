@@ -1,5 +1,7 @@
 var express = require('express');
 var router = express.Router();
+var multer  = require('multer')
+var upload = multer({ dest: 'uploads/' })
 
 var articleController = require('../controllers/articleController');
 
@@ -15,7 +17,10 @@ router.post('/', function(req, res, next) {
 });
 
 // Create article
-router.post('/submitArticle', articleController.createArticle);
+router.post('/submitArticle', upload.single('articleImage'), articleController.createArticle, function (req, res, next) {
+  //console.log(req.file);
+})
+
 
 // display articles
 router.get('/displayArticles', articleController.displayArticles);

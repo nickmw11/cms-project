@@ -7,21 +7,24 @@
 // mysql connection
 var mysqlConnect = require('../config/database.js');
 const fileUpload = require('express-fileupload');
+var multer  = require('multer')
+var upload  = multer({ dest: 'uploads/' })
 
 exports.createArticle = function(req, res){
     console.log(req.body.articleTitle);
 	console.log(req.body.articleAuthor);
 	console.log(req.body.articleContent);
 	console.log(req.body.articleDate);
-	console.log(req.body.articleImage);
+	console.log(req.file);
 
 
 	title = req.body.articleTitle;
 	author = req.body.articleAuthor;
 	content = req.body.articleContent;
 	date = req.body.articleDate;
-	articleImage = req.body.articleImage;
+	articleImage = req.file;
 	
+	console.log(articleImage);
 
 	
 

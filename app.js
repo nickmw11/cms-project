@@ -18,6 +18,9 @@ var morgan = require('morgan');
 var session = require('express-session');
 var configDB = require('./config/database.js');
 
+var multer  = require('multer');
+var upload = multer({ dest: 'uploads/' });
+
 var app = express();
 
 //mysql connection
