@@ -46,7 +46,7 @@ exports.displayArticles = function (req, res){
 		numRows = result.length;
 		var articleArray = [];
 		for (i = numRows - 1; i >= 0; i--) {
-		resultString = resultString + " <div class=\"row\"><div class=\"col-lg-10 col-md-10 col-sm-8 col-xs-10\"><h3>" + result[i].Title + " " + result[i].ID + "</h3><h5>" + "Author: " + result[i].Author + "</h5></div><div class=\"col-lg-2 col-md-2 col-sm-4 col-xs-2\"><input type=\"button\" onclick=\"deleteArticle(" + result[i].ID + ")\" value=\"Delete\" class=\"btn\"></input></div></div>";
+		resultString = resultString + " <div class=\"row\"><div class=\"col-lg-10 col-md-10 col-sm-8 col-xs-10\"><h3>" + result[i].Title + " " + result[i].ID + "</h3><h5>" + "Author: " + result[i].Author + "</h5></div><div class=\"col-lg-2 col-md-2 col-sm-4 col-xs-2\"><form method=\"POST\" action=\"/article/deleteArticles\"> <input type=\"hidden\" class=\"form-control d-none\" id=\"articleID\" value=\"" + result[i].ID + "\" name=\"articleID\"><button  type=\"submit\" class=\"btn\">Delete</button></form></div></div>";
 	}
 	res.send(resultString);
 });

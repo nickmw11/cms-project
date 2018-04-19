@@ -26,20 +26,30 @@ function loadArticles() {
 }
 
 function deleteArticle(id) {
-    // var xhttp = new XMLHttpRequest();
+
     // xhttp.onreadystatechange = function() {
     // if (this.readyState == 4 && this.status == 200) {
     //     document.getElementById("articlePreview").innerHTML = this.responseText;
     // }
     // };
-    // xhttp.open("GET", "/article/deleteArticles", true);
-    // xhttp.send();
+
+    var xhttp = new XMLHttpRequest();
+
+
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+         document.getElementById("articleID").innerHTML = this.responseText;
+        }
+    };
+    xhttp.open("POST", "/article/deleteArticles", true);
+    xhttp.send();
     console.log(id);
 
-    $.post("/article/deleteArticles",
-    {
-      articleID: id
-    });
+    // $.post("/article/deleteArticles",
+    // {
+    //   articleID: id
+    // });
+
 
     // $.ajax({
     //     url: "/article/deleteArticles",
