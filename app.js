@@ -55,7 +55,7 @@ app.use('/customermessages', customermessages);
 app.use('/post', post);
 app.use('/jobpostings', jobpostings);
 app.use('/blog', blog);
-app.use('about', about);
+app.use('/about', about);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
