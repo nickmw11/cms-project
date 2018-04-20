@@ -10,13 +10,14 @@ const fileUpload = require('express-fileupload');
 var multer  = require('multer')
 var upload  = multer({ dest: 'uploads/' })
 
+/* This function creates an article and submits it into the database.
+ * It then renders the comfirmation.ejs page.
+ * @param req - the request which contains the form input for the article
+ * @param res - the response which renders the confirmation page.
+ */
 exports.createArticle = function(req, res){
-    console.log(req.body.articleTitle);
-	console.log(req.body.articleAuthor);
-	console.log(req.body.articleContent);
-	console.log(req.body.articleDate);
-	console.log(req.file);
 
+	console.log(req.file);
 
 	var title = req.body.articleTitle;
 	var author = req.body.articleAuthor;
@@ -27,8 +28,6 @@ exports.createArticle = function(req, res){
 	console.log(isActive);
 	
 	console.log(articleImage);
-
-	
 
 	// Replaces single quotes with 2 single quotes so that it won't mess up the query.
 	title = title.replace(/'/g,"''");
@@ -42,6 +41,9 @@ exports.createArticle = function(req, res){
     })
 };
 
+/* This function creates a query selecting all articles from the articles table in the database.
+ * It formats them, putting them into resultString, and then sends resultString as the response.
+ */
 exports.displayArticles = function (req, res){
 	var query = "Select * from Articles"
 	var resultString = "";
@@ -69,6 +71,9 @@ exports.displayArticles = function (req, res){
 	});
 }
 
+/* This function deletes articles from the database based on the id of the article
+ * @param req - contains the id of the article
+ */
 exports.deleteArticles = function (req, res){
 	var articleID = req.body.articleID;
 	var query = "DELETE FROM Articles WHERE ID = " + articleID + ";";
@@ -79,6 +84,9 @@ exports.deleteArticles = function (req, res){
 	res.render('pages/article');
 }
 
+/* This function toggles whether the article should be displayed on the front end website
+ * based on its ID.
+ */
 exports.toggleIsActive = function (req, res){
 	var articleID = req.body.articleID;
 	var query = "SELECT * FROM Articles WHERE ID = " + articleID + ";";
