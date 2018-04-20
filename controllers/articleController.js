@@ -45,6 +45,16 @@ exports.createArticle = function(req, res){
 exports.displayArticles = function (req, res){
 	var query = "Select * from Articles"
 	var resultString = "";
+	
+	// HTML strings that are part of the resultString
+	var divStartString = "<div class=\"row\"><div class=\"col-lg-10 col-md-10 col-sm-8 col-xs-8\">";
+	var divFormStringStart = "<div class=\"col-lg-2 col-md-2 col-sm-4 col-xs-4\">";
+	var formDeleteStartString = "<form method=\"POST\" action=\"/article/deleteArticles\">";
+	var formToggleStartString = "<form method=\"POST\" action=\"/article/toggleIsActive\">";
+	var deleteButton = "<div style=\"margin-top:20px\"><button type=\"submit\" class=\"btn btn-default\">Delete</button></div>";
+	var toggleButton = "<div style=\"margin-top:10px\"><button type=\"submit\" class=\"btn btn-default\">Toggle</button></div>";
+	var divEnd = "</div>";
+	var formEnd = "</form>";
 
 	mysqlConnect.query(query, function (err, result, fields) {
 		if (err) throw err;
@@ -53,7 +63,7 @@ exports.displayArticles = function (req, res){
 		var articleArray = [];
 		for (i = numRows - 1; i >= 0; i--) {
 			var isActive = result[i].is_active == 1 ? "Yes" : "No";
-			resultString = resultString + " <div class=\"row\"><div class=\"col-lg-10 col-md-10 col-sm-8 col-xs-10\"><h3>" + result[i].Title + " " + result[i].ID + "</h3><h5>" + "Author: " + result[i].Author + "</h5><h5>Is Active:" + isActive +"</h5></div><div class=\"col-lg-2 col-md-2 col-sm-4 col-xs-2\"><form method=\"POST\" action=\"/article/deleteArticles\"> <input type=\"hidden\" class=\"form-control d-none\" id=\"articleID\" value=\"" + result[i].ID + "\" name=\"articleID\"><button  type=\"submit\" class=\"btn\">Delete</button></form> <form method=\"POST\" action=\"/article/toggleIsActive\"><input type=\"hidden\" class=\"form-control d-none\" id=\"articleID\" value=\"" + result[i].ID + "\" name=\"articleID\"><button type=\"submit\" class=\"btn\">Toggle</button></form></div></div>";
+			resultString = resultString + divStartString + "<h3>" + result[i].Title + "</h3><h5>" + "Author: " + result[i].Author + "</h5><h5>Is Active:" + isActive +"</h5>" + divEnd + divFormStringStart + formDeleteStartString + "<input type=\"hidden\" class=\"form-control d-none\" id=\"articleID\" value=\"" + result[i].ID + "\" name=\"articleID\">" + deleteButton + formEnd + formToggleStartString + "<input type=\"hidden\" class=\"form-control d-none\" id=\"articleID\" value=\"" + result[i].ID + "\" name=\"articleID\">" + toggleButton + formEnd + divEnd + divEnd;
 		}
 		res.send(resultString);
 	});
