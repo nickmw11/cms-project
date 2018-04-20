@@ -1,5 +1,18 @@
 # cms-project
 
+Test Plan:
+The Content Management System back-end:
+In command prompt (cmd), navigate to the directory of cms-project.  Type in "node app.js" and hit enter.
+In a browser, type in "localhost:3000" into the address bar and hit enter.
+To submit an article:
+Click on "Article" in the navbar along the top of the page
+In the fields displayed, enter the requested information:
+***INSERT TEST INFO FOR ARTICLE HERE***
+
+***CONTINUE WITH OTHER TEST CASES, AS WELL AS NECESSARY DIAGRAMS***
+
+
+
 Recommended NPM install - Nodemon
 
 npm install -g nodemon to install
