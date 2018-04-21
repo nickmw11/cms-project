@@ -7,8 +7,8 @@
 // mysql connection
 var mysqlConnect = require('../config/database.js');
 const fileUpload = require('express-fileupload');
-var multer  = require('multer')
-var upload  = multer({ dest: 'uploads/' })
+var multer  = require('multer');
+var upload  = multer({ dest: 'uploads/' });
 
 /* This function creates an article and submits it into the database.
  * It then renders the comfirmation.ejs page.
@@ -23,16 +23,17 @@ exports.createArticle = function(req, res){
 	var author = req.body.articleAuthor;
 	var content = req.body.articleContent;
 	var date = req.body.articleDate;
-	var articleImage = req.file;
+	var articleImage = req.file.originalname;
 	var isActive = req.body.is_active == "on" ? 1 : 0;
 	console.log(isActive);
-	
+
 	console.log(articleImage);
 
 	// Replaces single quotes with 2 single quotes so that it won't mess up the query.
 	title = title.replace(/'/g,"''");
 	author = author.replace(/'/g,"''");
 	content = content.replace(/'/g,"''");
+
 	// sql query
 	var query = "INSERT INTO Articles (title,author,date,content,image,is_active) VALUES ('" + title + "','" + author + "','" + date + "','" + content +  "','" + articleImage + "','" + isActive + "');";
 	mysqlConnect.query(query, function (err, result, fields) {
@@ -47,7 +48,7 @@ exports.createArticle = function(req, res){
 exports.displayArticles = function (req, res){
 	var query = "Select * from Articles"
 	var resultString = "";
-	
+
 	// HTML strings that are part of the resultString
 	var divStartString = "<div class=\"row\"><div class=\"col-lg-10 col-md-10 col-sm-8 col-xs-8\">";
 	var divFormStringStart = "<div class=\"col-lg-2 col-md-2 col-sm-4 col-xs-4\">";
