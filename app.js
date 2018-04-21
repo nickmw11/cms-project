@@ -39,14 +39,14 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // requiring routes
-var index = require('./routes/index');
-var article = require('./routes/article');
-var customermessages = require('./routes/customermessages');
-var post = require('./routes/post');
-var users = require('./routes/users');
-var jobpostings = require('./routes/jobpostings');
-var blog = require('./routes/blog');
-var about = require('./routes/about');
+var index = require('./routes/indexRoute');
+var article = require('./routes/articleRoute');
+var customermessages = require('./routes/customermessagesRoute');
+var post = require('./routes/postRoute');
+var users = require('./routes/usersRoute');
+var jobpostings = require('./routes/jobPostingsRoute');
+var blog = require('./routes/blogRoute');
+var about = require('./routes/aboutRoute');
 
 // using routes
 app.use('/', index);

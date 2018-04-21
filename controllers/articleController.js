@@ -17,17 +17,14 @@ var upload  = multer({ dest: 'uploads/' });
  */
 exports.createArticle = function(req, res){
 
-	console.log(req.file);
-
 	var title = req.body.articleTitle;
 	var author = req.body.articleAuthor;
 	var content = req.body.articleContent;
 	var date = req.body.articleDate;
 	var articleImage = req.file.originalname;
 	var isActive = req.body.is_active == "on" ? 1 : 0;
-	console.log(isActive);
 
-	console.log(articleImage);
+	console.log("article image: " + articleImage);
 
 	// Replaces single quotes with 2 single quotes so that it won't mess up the query.
 	title = title.replace(/'/g,"''");
@@ -95,9 +92,7 @@ exports.toggleIsActive = function (req, res){
 
 	mysqlConnect.query(query, function (err, result, fields) {
 		if (err) throw err;
-		console.log(result[0].is_active);
 		isActive = result[0].is_active == 1 ? 0 : 1;
-		console.log(isActive);
 		var updateQuery = "UPDATE Articles SET is_active = " + isActive + " WHERE ID = " + articleID + ";";
 		toggleIsActiveQuery(updateQuery);
 	});
