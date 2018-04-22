@@ -20,7 +20,7 @@ exports.createAbout = function(req, res){
     name = name.replace(/'/g,"''");
     bio = bio.replace(/'/g,"''");
 
-    var query = "INSERT INTO About (image, name, bio) VALUES ('" + image + "','" + name + "','" + bio + "');";
+    var query = "INSERT INTO about (image, name, bio) VALUES ('" + image + "','" + name + "','" + bio + "');";
     configDB.query(query, function (err, result, fields) {
     if (err) throw err;
     else res.render("pages/confirmation");

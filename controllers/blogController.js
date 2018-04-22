@@ -24,7 +24,7 @@ exports.createBlog = function(req, res){
     author = author.replace(/'/g,"''");
     content = content.replace(/'/g,"''");
 
-    var query = "INSERT INTO Blog (title,author,date,content) VALUES ('" + title + "','" + author + "','" + date + "','" + content + "');";
+    var query = "INSERT INTO blog (title,author,date,content) VALUES ('" + title + "','" + author + "','" + date + "','" + content + "');";
     mysqlConnect.query(query, function (err, result, fields) {
     if (err) throw err;
     else res.render("pages/confirmation");
@@ -35,7 +35,7 @@ exports.createBlog = function(req, res){
  * It formats them, putting them into resultString, and then sends resultString as the response.
  */
 exports.displayBlog = function (req, res){
-    var query = "SELECT ID, Title, Author, is_active FROM Blog"
+    var query = "SELECT ID, Title, Author, is_active FROM blog"
     var resultString = "";
   
     // HTML strings that are part of the resultString
@@ -68,7 +68,7 @@ exports.displayBlog = function (req, res){
   exports.deleteBlog = function (req, res){
   
       var blogID = req.body.blogID;
-      var query = "DELETE FROM Blog WHERE ID = " + blogID + ";";
+      var query = "DELETE FROM blog WHERE ID = " + blogID + ";";
   
       mysqlConnect.query(query, function (err, result, fields) {
           if (err) throw err;
@@ -82,14 +82,14 @@ exports.displayBlog = function (req, res){
   exports.toggleIsActive = function (req, res){
   
     var blogID = req.body.blogID;
-    var query = "SELECT * FROM Blog WHERE ID = " + blogID + ";";
+    var query = "SELECT * FROM blog WHERE ID = " + blogID + ";";
     var isActive;
   
       mysqlConnect.query(query, function (err, result, fields) {
           if (err) throw err;
           
           isActive = result[0].is_active == 1 ? 0 : 1;
-          var updateQuery = "UPDATE Blog SET is_active = " + isActive + " WHERE ID = " + blogID + ";";
+          var updateQuery = "UPDATE blog SET is_active = " + isActive + " WHERE ID = " + blogID + ";";
           toggleIsActiveQuery(updateQuery);
       });
   

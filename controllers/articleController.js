@@ -32,7 +32,7 @@ exports.createArticle = function(req, res){
 	content = content.replace(/'/g,"''");
 
 	// sql query
-	var query = "INSERT INTO Articles (title,author,date,content,image,is_active) VALUES ('" + title + "','" + author + "','" + date + "','" + content +  "','" + articleImage + "','" + isActive + "');";
+	var query = "INSERT INTO articles (title,author,date,content,image,is_active) VALUES ('" + title + "','" + author + "','" + date + "','" + content +  "','" + articleImage + "','" + isActive + "');";
 	mysqlConnect.query(query, function (err, result, fields) {
 	if (err) throw err;
 	else res.render("pages/confirmation");
@@ -43,7 +43,7 @@ exports.createArticle = function(req, res){
  * It formats them, putting them into resultString, and then sends resultString as the response.
  */
 exports.displayArticles = function (req, res){
-	var query = "Select * from Articles"
+	var query = "Select * from articles"
 	var resultString = "";
 
 	// HTML strings that are part of the resultString
@@ -74,7 +74,7 @@ exports.displayArticles = function (req, res){
  */
 exports.deleteArticles = function (req, res){
 	var articleID = req.body.articleID;
-	var query = "DELETE FROM Articles WHERE ID = " + articleID + ";";
+	var query = "DELETE FROM articles WHERE ID = " + articleID + ";";
 
 	mysqlConnect.query(query, function (err, result, fields) {
 		if (err) throw err;
@@ -87,13 +87,13 @@ exports.deleteArticles = function (req, res){
  */
 exports.toggleIsActive = function (req, res){
 	var articleID = req.body.articleID;
-	var query = "SELECT * FROM Articles WHERE ID = " + articleID + ";";
+	var query = "SELECT * FROM articles WHERE ID = " + articleID + ";";
 	var isActive;
 
 	mysqlConnect.query(query, function (err, result, fields) {
 		if (err) throw err;
 		isActive = result[0].is_active == 1 ? 0 : 1;
-		var updateQuery = "UPDATE Articles SET is_active = " + isActive + " WHERE ID = " + articleID + ";";
+		var updateQuery = "UPDATE articles SET is_active = " + isActive + " WHERE ID = " + articleID + ";";
 		toggleIsActiveQuery(updateQuery);
 	});
 
