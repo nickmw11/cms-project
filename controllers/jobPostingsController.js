@@ -89,10 +89,9 @@ exports.toggleIsActive = function (req, res){
   var isActive;
 
 	mysqlConnect.query(query, function (err, result, fields) {
-		if (err) throw err;
-		console.log(result[0].is_active);
+    if (err) throw err;
+    
 		isActive = result[0].is_active == 1 ? 0 : 1;
-		console.log(isActive);
 		var updateQuery = "UPDATE jobpostings SET is_active = " + isActive + " WHERE jobID = " + jobID + ";";
 		toggleIsActiveQuery(updateQuery);
 	});

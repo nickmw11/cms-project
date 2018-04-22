@@ -11,30 +11,31 @@
 
 <header>
     <% include ../partials/header %>
+    <script type="text/javascript" src="/javascript/blog.js"></script>
 </header>
 
 <main>
-    <div class="jumbotron">
-        <h1>Create a Blog Post</h1>
-        <p>Type in the information you would like to post, then click Post.</p>
+    <div class="jumbotron col-sm-7">
+      <h1>Create a Blog Post</h1>
+      <p>Type in the information you would like to post, then click Post.</p>
 
     <!--Here begins the start of the Post Making form-->
     <form method="POST" action="/blog/submitBlog">
-    <fieldset><legend>Create your blog here:</legend>
+      <fieldset><legend>Create your blog here:</legend>
       <!-- Box for post author -->
-      <div class="form-group">
-            <div class="input-group-prepend">
-              <span class="input-group-text" id="inputGroup-sizing-default"><b>Author Name:</b></span>
-            </div>
-            <input type="text" name="blogAuthor" class="form-control" placeholder="Enter your name" aria-label="Default" aria-describedby="inputGroup-sizing-default">
-          </div><br>
-      <!-- Box for post title -->
-      <div class="input-group">
-        <div class="input-group-prepend">
-          <span class="input-group-text" id="inputGroup-sizing-default"><b>Title:</b></span>
-        </div>
-        <input type="text" name="blogTitle" class="form-control" placeholder="Enter your blog title" aria-label="Default" aria-describedby="inputGroup-sizing-default">
-      </div><br>
+        <div class="form-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroup-sizing-default"><b>Author Name:</b></span>
+         </div>
+          <input type="text" name="blogAuthor" class="form-control" placeholder="Enter your name" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+        </div><br>
+        <!-- Box for post title -->
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroup-sizing-default"><b>Title:</b></span>
+          </div>
+          <input type="text" name="blogTitle" class="form-control" placeholder="Enter your blog title" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+        </div><br>
 
 
     <!--Below is the box for Post Body-->
@@ -52,6 +53,9 @@
       <button type="submit" class="btn btn-primary">Post to Blog</button><br>
     </form>
   </div>
+  <div class="col-sm-5">
+    <div class="jumbotron" id="blogPreview"></div>
+</div>
 </main>
 
 <footer>

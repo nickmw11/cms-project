@@ -3,7 +3,7 @@
  * in the database.
  */
 
-/* This function includes an initial call to loadArticles, and then
+/* This function includes an initial call to loadJobs, and then
  * calls it every 3 seconds
  */
 $(document).ready(function() {
@@ -11,8 +11,8 @@ $(document).ready(function() {
     setInterval("loadJobs()",3000);
 });
 
-/* This function creates the xhttp request "/articles/displayArticles" and sends it to the server.
- * The response text is put into a div with id="articles"
+/* This function creates the xhttp request "/jobpostings/displayJobPostings" and sends it to the server.
+ * The response text is put into a div with id="jobPreivew"
  */
 function loadJobs() {
     var xhttp = new XMLHttpRequest();
