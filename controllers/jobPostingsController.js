@@ -37,7 +37,7 @@ exports.createjobposting = function(req, res){
  * It formats them, putting them into resultString, and then sends resultString as the response.
  */
 exports.displayJobPostings = function (req, res){
-  var query = "Select Title, jobID, is_active from jobpostings"
+  var query = "SELECT id, title, is_active FROM jobpostings"
   var resultString = "";
 
   // HTML strings that are part of the resultString
@@ -59,7 +59,7 @@ exports.displayJobPostings = function (req, res){
       var jobpostingsArray = [];
       for (i = numRows - 1; i >= 0; i--) {
         var isActive = result[i].is_active == 1 ? "Yes" : "No";
-        resultString = resultString + divStartString + "<h2>Job Title: " + result[i].Title + "</h2><h3>" + isActive + "</h3>" + divEnd + divFormStringStart + formDeleteStartString + inputStart + result[i].jobID + inputEnd + deleteButton + formEnd + formToggleStartString + inputStart + result[i].jobID + inputEnd + toggleButton + formEnd + divEnd + divEnd;
+        resultString = resultString + divStartString + "<h2>Job Title: " + result[i].title + "</h2><h3>" + isActive + "</h3>" + divEnd + divFormStringStart + formDeleteStartString + inputStart + result[i].id + inputEnd + deleteButton + formEnd + formToggleStartString + inputStart + result[i].id + inputEnd + toggleButton + formEnd + divEnd + divEnd;
       }
       res.send(resultString);
   });
@@ -71,7 +71,7 @@ exports.displayJobPostings = function (req, res){
 exports.deleteArticles = function (req, res){
 
 	var jobID = req.body.jobID;
-	var query = "DELETE FROM jobpostings WHERE jobID = " + jobID + ";";
+	var query = "DELETE FROM jobpostings WHERE id = " + jobID + ";";
 
 	mysqlConnect.query(query, function (err, result, fields) {
 		if (err) throw err;
@@ -85,14 +85,14 @@ exports.deleteArticles = function (req, res){
 exports.toggleIsActive = function (req, res){
 
   var jobID = req.body.jobID;
-	var query = "SELECT * FROM jobpostings WHERE jobID = " + jobID + ";";
+	var query = "SELECT * FROM jobpostings WHERE id = " + jobID + ";";
   var isActive;
 
 	mysqlConnect.query(query, function (err, result, fields) {
     if (err) throw err;
     
 		isActive = result[0].is_active == 1 ? 0 : 1;
-		var updateQuery = "UPDATE jobpostings SET is_active = " + isActive + " WHERE jobID = " + jobID + ";";
+		var updateQuery = "UPDATE jobpostings SET is_active = " + isActive + " WHERE id = " + jobID + ";";
 		toggleIsActiveQuery(updateQuery);
 	});
 
