@@ -21,7 +21,12 @@ exports.createArticle = function(req, res){
 	var author = req.body.articleAuthor;
 	var content = req.body.articleContent;
 	var date = req.body.articleDate;
+	if (req.file) {
 	var articleImage = req.file.originalname;
+	}
+	else {
+		var articleImage = 'noimage.png';
+	}
 	var isActive = req.body.is_active == "on" ? 1 : 0;
 
 	console.log("article image: " + articleImage);
