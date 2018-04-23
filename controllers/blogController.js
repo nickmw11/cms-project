@@ -35,7 +35,7 @@ exports.createBlog = function(req, res){
  * It formats them, putting them into resultString, and then sends resultString as the response.
  */
 exports.displayBlog = function (req, res){
-    var query = "SELECT ID, Title, Author, is_active FROM blog"
+    var query = "SELECT id, title, author, is_active FROM blog"
     var resultString = "";
   
     // HTML strings that are part of the resultString
@@ -56,7 +56,7 @@ exports.displayBlog = function (req, res){
         numRows = result.length;
         for (i = numRows - 1; i >= 0; i--) {
           var isActive = result[i].is_active == 1 ? "Yes" : "No";
-          resultString = resultString + divStartString + "<h2>Title: " + result[i].Title + "</h2><h2>Author: " + result[i].Author + "</h2><h3>" + isActive + "</h3>" + divEnd + divFormStringStart + formDeleteStartString + inputStart + result[i].ID + inputEnd + deleteButton + formEnd + formToggleStartString + inputStart + result[i].ID + inputEnd + toggleButton + formEnd + divEnd + divEnd;
+          resultString = resultString + divStartString + "<h2>Title: " + result[i].title + "</h2><h2>Author: " + result[i].author + "</h2><h3>" + isActive + "</h3>" + divEnd + divFormStringStart + formDeleteStartString + inputStart + result[i].id + inputEnd + deleteButton + formEnd + formToggleStartString + inputStart + result[i].id + inputEnd + toggleButton + formEnd + divEnd + divEnd;
         }
         res.send(resultString);
     });
@@ -68,7 +68,7 @@ exports.displayBlog = function (req, res){
   exports.deleteBlog = function (req, res){
   
       var blogID = req.body.blogID;
-      var query = "DELETE FROM blog WHERE ID = " + blogID + ";";
+      var query = "DELETE FROM blog WHERE id = " + blogID + ";";
   
       mysqlConnect.query(query, function (err, result, fields) {
           if (err) throw err;
@@ -82,14 +82,14 @@ exports.displayBlog = function (req, res){
   exports.toggleIsActive = function (req, res){
   
     var blogID = req.body.blogID;
-    var query = "SELECT * FROM blog WHERE ID = " + blogID + ";";
+    var query = "SELECT * FROM blog WHERE id = " + blogID + ";";
     var isActive;
   
       mysqlConnect.query(query, function (err, result, fields) {
           if (err) throw err;
           
           isActive = result[0].is_active == 1 ? 0 : 1;
-          var updateQuery = "UPDATE blog SET is_active = " + isActive + " WHERE ID = " + blogID + ";";
+          var updateQuery = "UPDATE blog SET is_active = " + isActive + " WHERE id = " + blogID + ";";
           toggleIsActiveQuery(updateQuery);
       });
   
