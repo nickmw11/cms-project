@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<% include ../partials/head %>
+</head>
+<body class="container">
+    <header>
+        <% include ../partials/header %>
+        <script type="text/javascript" src="/javascript/signup.js"></script>
+    </header>
+	<main>
+            <div class="jumbotron col-sm-7">
+                <h1>Signup Here</h1>
+                <p>Choose a username and password and then hit submit.</p>
+                <form method="POST" action="/signup/submitsignup" >
+                    <fieldset><legend>Signup Here:</legend>
+                        <div class="form-group">
+                            <label for="signupUsername">Username:  </label>
+                            <input type="text" class="form-control" name="signupUsername" id="signupUsername">
+                        </div>
+                        <div class="form-group">
+                            <label for="signupPassword">Password:  </label>
+                            <input type="text" class="form-control" name="signupPassword" id="signupPassword">
+                        </div>
+                    </fieldset>
+                    <button type="submit" class="btn btn-primary">Signup</button>
+                </form>
+            </div>
+    </div>
+</main>
+
+
+
+
+<footer>
+    <% include ../partials/footer %>
+</footer>
+  </body>
+</html>

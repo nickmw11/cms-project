@@ -17,6 +17,7 @@ var mysql = require('mysql');
 var morgan = require('morgan');
 var session = require('express-session');
 var configDB = require('./config/database.js');
+var Session = require('node-session');
 
 var multer  = require('multer');
 var upload = multer({ dest: 'uploads/' });
@@ -47,6 +48,8 @@ var users = require('./routes/usersRoute');
 var jobpostings = require('./routes/jobPostingsRoute');
 var blog = require('./routes/blogRoute');
 var about = require('./routes/aboutRoute');
+var signup = require('./routes/signupRoute')
+var login = require('./routes/loginRoute')
 
 // using routes
 app.use('/', index);
@@ -56,13 +59,26 @@ app.use('/post', post);
 app.use('/jobpostings', jobpostings);
 app.use('/blog', blog);
 app.use('/about', about);
+app.use('/signup', signup);
+app.use('/login', login);
 
+app.use(session({
+  secret:'Q3UBzdH9GEfiRCTKbi5MTPyChpzXLsTD',
+  resave: false,
+  saveUnitialized: true,
+  cookie: { secure: false }
+}));
+session.startSession(req, res, callback)
+
+                    console.log(session.id);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
+
+
 
 // error handler
 app.use(function(err, req, res, next) {
