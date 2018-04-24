@@ -11,12 +11,37 @@
     
     <header>
         <% include ../partials/header %>
+        <script type="text/javascript" src="/javascript/about.js"></script>
     </header>
     
     <main>
         <div class="jumbotron">
             <h1>To Edit The About Page</h1>
-            <p>Will collect from staff member: ID, image, name, and a short bio..</p>
+            <form method="POST" action="/blog/submitBlog">
+                <fieldset><legend>Add a Staff Member:</legend>
+                    <!-- Box for uploading content that is a file on the computer (collect staff image) -->
+                    <div class="input-group mb-3">
+                        <label for="staffImage">Upload Image of Member</label>
+                        <input type="file" class="custom-file-input" name="staffImage">
+                    </div><br>
+                <!-- Box for staff name -->
+                  <div class="col-lg-12">
+                      <label for="staffName">Member Name:</label>
+                      <input type="text" name="staffName" class="form-control" placeholder="Enter his/her name">
+                  </div><br>
+          
+              <!--Below is the box for staff bio-->
+              <div class="col-lg-12">
+                    <label for="staffBio">Member Bio:</label>
+                    <input type="text" name="staffBio" class="form-control" placeholder="Enter a short bio">
+                </div><br>
+                <div class="form-group">
+                  <label for="is_active">Publish to database:  </label>
+                  <input type="checkbox" class="form-control" name="is_active" id="is_active">
+                </div>
+              </fieldset>
+                <button type="submit" class="btn btn-primary">Post to About</button><br>
+              </form>
     </main>
     
     <footer>
