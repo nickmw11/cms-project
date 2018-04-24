@@ -31,37 +31,27 @@ exports.createBlog = function(req, res){
     })
 };
 
-/* This function creates a query selecting Title, jobID, and is_active from all jobPostings from the jobpostings table in the database.
- * It formats them, putting them into resultString, and then sends resultString as the response.
+/* This function creates a query selecting title, author, id, and is_active from all blogs in the blog table in the database.
+ * It then loops through all items, pushing them as objects onto blogArray. Finally, it renders the blogDisplay page,
+ * passing blogArray as to that page.
  */
 exports.displayBlog = function (req, res){
     var query = "SELECT id, title, author, is_active FROM blog"
-    var resultString = "";
-  
-    // HTML strings that are part of the resultString
-    var divStartString = "<div class=\"row\"><div class=\"col-lg-10 col-md-10 col-sm-8 col-xs-8\">";
-    var divFormStringStart = "<div class=\"col-lg-2 col-md-2 col-sm-4 col-xs-4\">";
-    var formDeleteStartString = "<form method=\"POST\" action=\"/blog/deleteBlog\">";
-    var formToggleStartString = "<form method=\"POST\" action=\"/blog/toggleIsActive\">";
-    var inputStart = "<input type=\"hidden\" class=\"form-control d-none\" id=\"blogID\" name=\"blogID\" value=\""
-    var inputEnd = "\" />"
-    var deleteButton = "<div style=\"margin-top:20px\"><button type=\"submit\" class=\"btn btn-default\">Delete</button></div>";
-    var toggleButton = "<div style=\"margin-top:10px\"><button type=\"submit\" class=\"btn btn-default\">Toggle</button></div>";
-    var divEnd = "</div>";
-    var formEnd = "</form>";
+    var blogArray = [];
   
     mysqlConnect.query(query, function (err, result, fields) {
         if (err) throw err;
   
         numRows = result.length;
         for (i = numRows - 1; i >= 0; i--) {
-          var isActive = result[i].is_active == 1 ? "Yes" : "No";
-          resultString = resultString + divStartString + "<h2>Title: " + result[i].title + "</h2><h2>Author: " + result[i].author + "</h2><h3>" + isActive + "</h3>" + divEnd + divFormStringStart + formDeleteStartString + inputStart + result[i].id + inputEnd + deleteButton + formEnd + formToggleStartString + inputStart + result[i].id + inputEnd + toggleButton + formEnd + divEnd + divEnd;
+            var is_active = result[i].is_active == 1 ? "Yes" : "No";
+            blogArray.push( { id: result[i].id, title: result[i].title, author: result[i].author, is_active: is_active } );
         }
-        res.send(resultString);
+        res.render('displays/blogDisplay', {
+            blogArray: blogArray
+        });
     });
   }
-  
   /* This function deletes jobpostings from the database based on the id of the job
    * @param req - contains the id of the article
    */
