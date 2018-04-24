@@ -44,22 +44,14 @@ exports.createArticle = function(req, res){
     })
 };
 
-/* This function creates a query selecting all articles from the articles table in the database.
- * It formats them, putting them into resultString, and then sends resultString as the response.
+/* This function creates a query selecting columns id, title, author, and is_active from
+ * all articles from the articles table in the database.
+ * Then it renders articleDisplay passing in an array of all datafields for each
+ * article.
  */
 exports.displayArticles = function (req, res){
-	var query = "Select * from articles"
-	var resultString = "";
-
-	// HTML strings that are part of the resultString
-	var divStartString = "<div class=\"row\"><div class=\"col-lg-10 col-md-10 col-sm-8 col-xs-8\">";
-	var divFormStringStart = "<div class=\"col-lg-2 col-md-2 col-sm-4 col-xs-4\">";
-	var formDeleteStartString = "<form method=\"POST\" action=\"/article/deleteArticles\">";
-	var formToggleStartString = "<form method=\"POST\" action=\"/article/toggleIsActive\">";
-	var deleteButton = "<div style=\"margin-top:20px\"><button type=\"submit\" class=\"btn btn-default\">Delete</button></div>";
-	var toggleButton = "<div style=\"margin-top:10px\"><button type=\"submit\" class=\"btn btn-default\">Toggle</button></div>";
-	var divEnd = "</div>";
-	var formEnd = "</form>";
+	var query = "Select id, title, author, is_active from articles"
+	var articleArray = [];
 
 	mysqlConnect.query(query, function (err, result, fields) {
 		if (err) throw err;
@@ -67,10 +59,12 @@ exports.displayArticles = function (req, res){
 		numRows = result.length;
 		var articleArray = [];
 		for (i = numRows - 1; i >= 0; i--) {
-			var isActive = result[i].is_active == 1 ? "Yes" : "No";
-			resultString = resultString + divStartString + "<h3>" + result[i].Title + "</h3><h5>" + "Author: " + result[i].Author + "</h5><h5>Is Active:" + isActive +"</h5>" + divEnd + divFormStringStart + formDeleteStartString + "<input type=\"hidden\" class=\"form-control d-none\" id=\"articleID\" value=\"" + result[i].ID + "\" name=\"articleID\">" + deleteButton + formEnd + formToggleStartString + "<input type=\"hidden\" class=\"form-control d-none\" id=\"articleID\" value=\"" + result[i].ID + "\" name=\"articleID\">" + toggleButton + formEnd + divEnd + divEnd;
+			var is_active = result[i].is_active == 1 ? "Yes" : "No";
+			articleArray.push({ id: result[i].id, title: result[i].title, author: result[i].author, is_active: is_active });
 		}
-		res.send(resultString);
+		res.render('displays/articleDisplay', {
+            articleArray: articleArray
+        });
 	});
 }
 
@@ -79,7 +73,7 @@ exports.displayArticles = function (req, res){
  */
 exports.deleteArticles = function (req, res){
 	var articleID = req.body.articleID;
-	var query = "DELETE FROM articles WHERE ID = " + articleID + ";";
+	var query = "DELETE FROM articles WHERE id = " + articleID + ";";
 
 	mysqlConnect.query(query, function (err, result, fields) {
 		if (err) throw err;
@@ -92,13 +86,13 @@ exports.deleteArticles = function (req, res){
  */
 exports.toggleIsActive = function (req, res){
 	var articleID = req.body.articleID;
-	var query = "SELECT * FROM articles WHERE ID = " + articleID + ";";
+	var query = "SELECT * FROM articles WHERE id = " + articleID + ";";
 	var isActive;
 
 	mysqlConnect.query(query, function (err, result, fields) {
 		if (err) throw err;
 		isActive = result[0].is_active == 1 ? 0 : 1;
-		var updateQuery = "UPDATE articles SET is_active = " + isActive + " WHERE ID = " + articleID + ";";
+		var updateQuery = "UPDATE articles SET is_active = " + isActive + " WHERE id = " + articleID + ";";
 		toggleIsActiveQuery(updateQuery);
 	});
 
