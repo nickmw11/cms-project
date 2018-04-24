@@ -1,7 +1,8 @@
 /* Filename: blogController.js
  * Author: John Paul Depew
  * Description: This file takes input from the blog.ejs page and submits it into the Blog table
- * in the database.
+ * in the database. It also displays the title, author, and status of all blogs and allows the user
+ * to toggle whether or not the blogs appear on the front end. The blogs can also be deleted.
  */
 
 // mysql connection
@@ -18,13 +19,14 @@ exports.createBlog = function(req, res){
     var author = req.body.blogAuthor;
     var content = req.body.blogContent;
     var date = req.body.blogDate;
+    var is_active = req.body.is_active == "on" ? 1 : 0;
 
     // Replaces single quotes with 2 single quotes so that it won't mess up the query.
     title = title.replace(/'/g,"''");
     author = author.replace(/'/g,"''");
     content = content.replace(/'/g,"''");
 
-    var query = "INSERT INTO blog (title,author,date,content) VALUES ('" + title + "','" + author + "','" + date + "','" + content + "');";
+    var query = "INSERT INTO blog (title,author,date,content, is_active) VALUES ('" + title + "','" + author + "','" + date + "','" + content + "','" + is_active + "');";
     mysqlConnect.query(query, function (err, result, fields) {
     if (err) throw err;
     else res.render("pages/confirmation");

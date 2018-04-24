@@ -27,7 +27,7 @@ exports.createArticle = function(req, res){
 	else {
 		var articleImage = 'noimage.png';
 	}
-	var isActive = req.body.is_active == "on" ? 1 : 0;
+	var is_active = req.body.is_active == "on" ? 1 : 0;
 
 	console.log("article image: " + articleImage);
 
@@ -37,7 +37,7 @@ exports.createArticle = function(req, res){
 	content = content.replace(/'/g,"''");
 
 	// sql query
-	var query = "INSERT INTO articles (title,author,date,content,image,is_active) VALUES ('" + title + "','" + author + "','" + date + "','" + content +  "','" + articleImage + "','" + isActive + "');";
+	var query = "INSERT INTO articles (title,author,date,content,image,is_active) VALUES ('" + title + "','" + author + "','" + date + "','" + content +  "','" + articleImage + "','" + is_active + "');";
 	mysqlConnect.query(query, function (err, result, fields) {
 	if (err) throw err;
 	else res.render("pages/confirmation");
