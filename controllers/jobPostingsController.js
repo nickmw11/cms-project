@@ -19,38 +19,26 @@ exports.createjobposting = function(req, res){
       title = req.body.jobTitle;
       description = req.body.jobDescription;
       requirements = req.body.jobRequirements;
-      var isActive = req.body.is_active == "on" ? 1 : 0;
+      var is_active = req.body.is_active == "on" ? 1 : 0;
 
       // Replaces single quotes with 2 single quotes so that it won't mess up the query.
       title = title.replace(/'/g,"''");
       description = description.replace(/'/g,"''");
       requirements = requirements.replace(/'/g,"''");
 
-      var query = "INSERT INTO jobpostings (title,description,requirements,is_active) VALUES ('" + title + "','" + description + "','" + requirements + "','" + isActive + "');";
+      var query = "INSERT INTO jobpostings (title, description, requirements, is_active) VALUES ('" + title + "','" + description + "','" + requirements + "','" + is_active + "');";
       mysqlConnect.query(query, function (err, result, fields) {
         if (err) throw err;
-        else res.render("pages/confirmation");
+        else res.render("pages/jobpostings");
       })
   };
 
-/* This function creates a query selecting Title, jobID, and is_active from all jobPostings from the jobpostings table in the database.
- * It formats them, putting them into resultString, and then sends resultString as the response.
+/* This function creates a query selecting title, id, and is_active from all jobPostings from the jobpostings table in the database.
+ * It puts all of them into jobArray, then renders jobDisplay, passing in jobArray. 
  */
 exports.displayJobPostings = function (req, res){
   var query = "SELECT id, title, is_active FROM jobpostings"
-  var resultString = "";
-
-  // HTML strings that are part of the resultString
-  var divStartString = "<div class=\"row\"><div class=\"col-lg-10 col-md-10 col-sm-8 col-xs-8\">";
-  var divFormStringStart = "<div class=\"col-lg-2 col-md-2 col-sm-4 col-xs-4\">";
-  var formDeleteStartString = "<form method=\"POST\" action=\"/jobpostings/deleteJobPostings\">";
-  var formToggleStartString = "<form method=\"POST\" action=\"/jobpostings/toggleIsActive\">";
-  var inputStart = "<input type=\"hidden\" class=\"form-control d-none\" id=\"jobID\" name=\"jobID\" value=\""
-  var inputEnd = "\" />"
-  var deleteButton = "<div style=\"margin-top:20px\"><button type=\"submit\" class=\"btn btn-default\">Delete</button></div>";
-  var toggleButton = "<div style=\"margin-top:10px\"><button type=\"submit\" class=\"btn btn-default\">Toggle</button></div>";
-  var divEnd = "</div>";
-  var formEnd = "</form>";
+  var jobArray = [];
 
   mysqlConnect.query(query, function (err, result, fields) {
       if (err) throw err;
@@ -58,17 +46,20 @@ exports.displayJobPostings = function (req, res){
       numRows = result.length;
       var jobpostingsArray = [];
       for (i = numRows - 1; i >= 0; i--) {
-        var isActive = result[i].is_active == 1 ? "Yes" : "No";
-        resultString = resultString + divStartString + "<h2>Job Title: " + result[i].title + "</h2><h3>" + isActive + "</h3>" + divEnd + divFormStringStart + formDeleteStartString + inputStart + result[i].id + inputEnd + deleteButton + formEnd + formToggleStartString + inputStart + result[i].id + inputEnd + toggleButton + formEnd + divEnd + divEnd;
+        var is_active = result[i].is_active == 1 ? "Yes" : "No";
+        jobArray.push({ id: result[i].id, title: result[i].title, is_active: is_active });
       }
-      res.send(resultString);
+      // Rendering the preview panel ejs page and passing in jobArray
+      res.render('displays/jobDisplay', {
+        jobArray: jobArray
+      })
   });
 }
 
 /* This function deletes jobpostings from the database based on the id of the job
  * @param req - contains the id of the article
  */
-exports.deleteArticles = function (req, res){
+exports.deleteJobPostings = function (req, res){
 
 	var jobID = req.body.jobID;
 	var query = "DELETE FROM jobpostings WHERE id = " + jobID + ";";
@@ -86,13 +77,13 @@ exports.toggleIsActive = function (req, res){
 
   var jobID = req.body.jobID;
 	var query = "SELECT * FROM jobpostings WHERE id = " + jobID + ";";
-  var isActive;
+  var is_active;
 
 	mysqlConnect.query(query, function (err, result, fields) {
     if (err) throw err;
     
-		isActive = result[0].is_active == 1 ? 0 : 1;
-		var updateQuery = "UPDATE jobpostings SET is_active = " + isActive + " WHERE id = " + jobID + ";";
+		is_active = result[0].is_active == 1 ? 0 : 1;
+		var updateQuery = "UPDATE jobpostings SET is_active = " + is_active + " WHERE id = " + jobID + ";";
 		toggleIsActiveQuery(updateQuery);
 	});
 

@@ -1,0 +1,22 @@
+<!-- Filename: jobDisplay.ejs
+     Description: File containing repeatable form for individual jobs
+     This loops through each blog in jobArray and displays
+     the jobs on the job page -->
+<% jobArray.forEach(function(job){ %>
+    <div class="row">
+        <div class="col-lg-10 col-md-10 col-sm-8 col-xs-8">
+            <h3>Title: <%= job.title %></h3>
+            <h5>Is active: <%= job.is_active %></h5>
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4">
+            <form method="POST" action="/jobpostings/deleteJobPostings">
+                <input type="hidden" class="form-control d-none" id="jobID" name="jobID" value=<%= job.id %> />
+                <div style="margin-top:20px"><button type="submit" class="btn btn-default">Delete</button></div>
+            </form>
+            <form method="POST" action="/jobpostings/toggleIsActive">
+                <input type="hidden" class="form-control d-none" id="jobID" name="jobID" value=<%= job.id %> />
+                <div style="margin-top:10px"><button type="submit" class="btn btn-default">Toggle</button></div>
+            </form>
+        </div>
+    </div>
+<% }) %>

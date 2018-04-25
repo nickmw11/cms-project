@@ -40,7 +40,7 @@ exports.createArticle = function(req, res){
 	var query = "INSERT INTO articles (title,author,date,content,image,is_active) VALUES ('" + title + "','" + author + "','" + date + "','" + content +  "','" + articleImage + "','" + is_active + "');";
 	mysqlConnect.query(query, function (err, result, fields) {
 	if (err) throw err;
-	else res.render("pages/confirmation");
+	else res.render("pages/article");
     })
 };
 
@@ -71,7 +71,7 @@ exports.displayArticles = function (req, res){
 /* This function deletes articles from the database based on the id of the article
  * @param req - contains the id of the article
  */
-exports.deleteArticles = function (req, res){
+exports.deleteArticle = function (req, res){
 	var articleID = req.body.articleID;
 	var query = "DELETE FROM articles WHERE id = " + articleID + ";";
 

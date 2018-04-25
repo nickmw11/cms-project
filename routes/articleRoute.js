@@ -32,7 +32,7 @@ router.post('/submitArticle', upload.single('articleImage'), articleController.c
 router.get('/displayArticles', articleController.displayArticles);
 
 // delete article
-router.post('/deleteArticles', articleController.deleteArticles);
+router.post('/deleteArticle', articleController.deleteArticle);
 
 // toggle is_active on an article
 router.post('/toggleIsActive', articleController.toggleIsActive);
