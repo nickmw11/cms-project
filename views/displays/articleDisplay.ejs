@@ -1,0 +1,23 @@
+<!-- Filename: articleDisplay.ejs
+     Description: File containing repeatable form for individual blogs
+     This loops through each blog in blogArray and displays
+     the blogs on the blog page -->
+<% articleArray.forEach(function(article){ %>
+    <div class="row">
+        <div class="col-lg-10 col-md-10 col-sm-8 col-xs-8">
+            <h3>Title: <%= article.title %></h3>
+            <h5>Author: <%= article.author %></h5>
+            <h5>Is active: <%= article.is_active %></h5>
+        </div>
+        <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4">
+            <form method="POST" action="/article/deleteArticle">
+                <input type="hidden" class="form-control d-none" id="articleID" name="articleID" value=<%= article.id %> />
+                <div style="margin-top:20px"><button type="submit" class="btn btn-default">Delete</button></div>
+            </form>
+            <form method="POST" action="/article/toggleIsActive">
+                <input type="hidden" class="form-control d-none" id="articleID" name="articleID" value=<%= article.id %> />
+                <div style="margin-top:10px"><button type="submit" class="btn btn-default">Toggle</button></div>
+            </form>
+        </div>
+    </div>
+<% }) %>

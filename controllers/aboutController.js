@@ -23,6 +23,6 @@ exports.createAbout = function(req, res){
     var query = "INSERT INTO about (image, name, bio) VALUES ('" + image + "','" + name + "','" + bio + "');";
     configDB.query(query, function (err, result, fields) {
     if (err) throw err;
-    else res.render("pages/confirmation");
+    else res.render("pages/about");
     })
 };

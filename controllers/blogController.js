@@ -29,7 +29,7 @@ exports.createBlog = function(req, res){
     var query = "INSERT INTO blog (title,author,date,content, is_active) VALUES ('" + title + "','" + author + "','" + date + "','" + content + "','" + is_active + "');";
     mysqlConnect.query(query, function (err, result, fields) {
     if (err) throw err;
-    else res.render("pages/confirmation");
+    else res.render("pages/blog");
     })
 };
 

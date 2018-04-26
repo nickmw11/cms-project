@@ -1,0 +1,15 @@
+<!-- Filename: messagesDisplay.ejs
+     Description: File containing repeatable form for individual messages
+     This loops through each message in messageArray and displays
+     the messages on the customermessages page -->
+<% messageArray.forEach(function(message){ %>
+    <div class="row">
+        <div class="col-xs-12">
+            <h2>Name: <%= message.firstname + " " + message.lastname %></h2>
+            <h5>Email: <%= message.email %></h5>
+            <h5>Phone: <%= message.phone %></h5>
+            <h4>Subject: <%= message.subject %></h4>
+            <div>Message: <%= message.body %></div>
+        </div>
+    </div>
+<% }) %>

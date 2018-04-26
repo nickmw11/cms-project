@@ -1,39 +1,56 @@
+<!-- Filename: jobpostings.ejs
+     This file contains a form to submit job postings
+     and a preivew of the job title and whether or not it
+     is active on the database. -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <% include ../partials/head %>
 </head>
 <body class="container">
-    <header>
-        <% include ../partials/header %>
-        <script type="text/javascript" src="/javascript/jobPostings.js"></script>
-    </header>
-	<main>
-            <div class="jumbotron col-sm-7">
-                <h1>Create a Job Posting</h1>
-                <p>Type in the information you would like to post, then click Post.</p>
-                <form method="POST" action="/jobpostings/submitjobposting" >
-                    <fieldset><legend>Create your job here:</legend>
+<header>
+    <% include ../partials/header %>
+    <script type="text/javascript" src="/javascript/jobPostings.js"></script>
+</header>
+<main>
+    <div class="row">
+        <div class="col-sm-7">
+            <div class="jumbotron">
+                    <h1>Create a Job</h1>
+                    <p>Type in the information you would like to post, then click Submit.</p>
+                    <form method="POST" action="/jobpostings/submitJobPosting">
+                    <fieldset>
+                        <!-- Box for job title -->
                         <div class="form-group">
-                            <label for="articleTitle">Job Title:  </label>
-                            <input type="text" class="form-control" name="jobTitle" id="jobTitle">
-                        </div>
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="inputGroup-sizing-default"><b>Job Title:</b></span>
+                            </div>
+                            <input type="text" name="jobTitle" class="form-control" placeholder="Enter job title" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                        </div><br>
+                    
+                        <!--Below is the box for Post Body-->
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><b>Job Description:</b></span>
+                            </div>
+                            <textarea name="jobDescription" class="form-control" placeholder="Type your content body here"aria-label="Default"></textarea>
+                        </div><br>
+                        <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><b>Job Requirements:</b></span>
+                                </div>
+                                <textarea name="jobRequirements" class="form-control" placeholder="Type your content body here"aria-label="Default"></textarea>
+                        </div><br>
                         <div class="form-group">
-                                <label for="articleContent">Job Description:  </label>
-                                <textarea class="form-control" name="jobDescription" id="jobDescription" rows="8"></textarea>
-                        </div>
-                        <div class="form-group">
-                                <label for="articleContent">Job Requirements:  </label>
-                                <textarea class="form-control" name="jobRequirements" id="jobRequirements" rows="8"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="is_active">Publish to Database:  </label>
-                            <input type="checkbox" class="form-control" name="is_active" id="is_active" ></textarea>
+                            <label for="is_active">Publish to database:  </label>
+                            <input type="checkbox" class="form-control" name="is_active" id="is_active">
                         </div>
                     </fieldset>
-                    <button type="submit" class="btn btn-primary">Submit Job Posting</button>
-                </form>
+                        <button type="submit" class="btn btn-primary">Submit Job</button>
+                    </form>
             </div>
+        </div>
         <div class="col-sm-5">
             <div class="jumbotron" id="jobPreview"></div>
         </div>
