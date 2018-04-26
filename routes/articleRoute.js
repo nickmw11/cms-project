@@ -27,7 +27,6 @@ router.post('/', function(req, res, next) {
 // Create article
 router.post('/submitArticle', upload.single('articleImage'), articleController.createArticle)
 
-
 // display articles
 router.get('/displayArticles', articleController.displayArticles);
 

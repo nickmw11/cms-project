@@ -2,52 +2,60 @@
     Author: Jazmine Kennedy
     Description: Should be able to make changes to the about page from here. -->
 
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <% include ../partials/head %>
-    </head>
-    <body class="container">
-    
-    <header>
-        <% include ../partials/header %>
-        <script type="text/javascript" src="/javascript/about.js"></script>
-    </header>
-    
-    <main>
-        <div class="jumbotron">
-            <h1>To Edit The About Page</h1>
-            <form method="POST" action="/blog/submitBlog">
-                <fieldset><legend>Add a Staff Member:</legend>
-                    <!-- Box for uploading content that is a file on the computer (collect staff image) -->
-                    <div class="input-group mb-3">
-                        <label for="staffImage">Upload Image of Member</label>
-                        <input type="file" class="custom-file-input" name="staffImage">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <% include ../partials/head %>
+</head>
+<body class="container">
+
+<header>
+    <% include ../partials/header %>
+    <script type="text/javascript" src="/javascript/about.js"></script>
+</header>
+
+<main>
+    <div class="row">
+        <div class="col-sm-7">
+            <div class="jumbotron">
+                <h1>To Edit The About Page</h1>
+                <form method="POST" action="/about/submitAbout">
+                    <fieldset><legend>Add a Staff Member:</legend>
+                        <!-- Box for uploading content that is a file on the computer (collect staff image) -->
+                        <div class="input-group mb-3">
+                            <label for="staffImage">Upload Image of Member</label>
+                            <input type="file" class="custom-file-input" name="staffImage">
+                        </div><br>
+                    <!-- Box for staff name -->
+                    <div class="col-lg-12">
+                        <label for="staffName">Member Name:</label>
+                        <input type="text" name="staffName" class="form-control" placeholder="Enter his/her name">
                     </div><br>
-                <!-- Box for staff name -->
-                  <div class="col-lg-12">
-                      <label for="staffName">Member Name:</label>
-                      <input type="text" name="staffName" class="form-control" placeholder="Enter his/her name">
-                  </div><br>
-          
-              <!--Below is the box for staff bio-->
-              <div class="col-lg-12">
-                    <label for="staffBio">Member Bio:</label>
-                    <input type="text" name="staffBio" class="form-control" placeholder="Enter a short bio">
-                </div><br>
-                <div class="form-group">
-                  <label for="is_active">Publish to database:  </label>
-                  <input type="checkbox" class="form-control" name="is_active" id="is_active">
-                </div>
-              </fieldset>
-                <button type="submit" class="btn btn-primary">Post to About</button><br>
-              </form>
-    </main>
+            
+                <!--Below is the box for staff bio-->
+                <div class="col-lg-12">
+                        <label for="staffBio">Member Bio:</label>
+                        <input type="text" name="staffBio" class="form-control" placeholder="Enter a short bio">
+                    </div><br>
+                    <div class="form-group">
+                    <label for="is_active">Publish to database:  </label>
+                    <input type="checkbox" class="form-control" name="is_active" id="is_active">
+                    </div>
+                </fieldset>
+                    <button type="submit" class="btn btn-primary">Post to About</button><br>
+                </form>
+            </div>
+        </div>
+        <div class="col-sm-5">
+                <div class="jumbotron" id="aboutPreview"></div>
+        </div>
+    </div>
+</main>
     
-    <footer>
-      <% include ../partials/footer %>
-    </footer>
-    
-    </body>
-    </html>
+<footer>
+    <% include ../partials/footer %>
+</footer>
+
+</body>
+</html>
     

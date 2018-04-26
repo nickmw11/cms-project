@@ -1,0 +1,22 @@
+<!-- Filename: aboutDisplay.ejs
+     Description: File containing repeatable form for individual about
+     This loops through each about in aboutArray and displays
+     the about on the about page -->
+     <% aboutArray.forEach(function(about){ %>
+        <div class="row">
+            <div class="col-lg-10 col-md-10 col-sm-8 col-xs-8">
+                <h3>Name: <%= about.name %></h3>
+                <h5>Is active: <%= about.is_active %></h5>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4">
+                <form method="POST" action="/about/deleteAbout">
+                    <input type="hidden" class="form-control d-none" id="aboutID" name="aboutID" value=<%= about.id %> />
+                    <div style="margin-top:20px"><button type="submit" class="btn btn-default">Delete</button></div>
+                </form>
+                <form method="POST" action="/about/toggleIsActive">
+                    <input type="hidden" class="form-control d-none" id="aboutID" name="aboutID" value=<%= about.id %> />
+                    <div style="margin-top:10px"><button type="submit" class="btn btn-default">Toggle</button></div>
+                </form>
+            </div>
+        </div>
+    <% }) %>

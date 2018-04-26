@@ -10,4 +10,13 @@ router.get('/', function(req, res, next) {
 
 router.post('/submitAbout', aboutController.createAbout);
 
+// display employees
+router.get('/displayAbout', aboutController.displayAbout);
+
+// delete employee
+router.post('/deleteAbout', aboutController.deleteAbout);
+
+// toggle is_active on an employee
+router.post('/toggleIsActive', aboutController.toggleIsActive);
+
 module.exports = router;

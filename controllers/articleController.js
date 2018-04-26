@@ -11,9 +11,9 @@ var multer  = require('multer');
 var upload  = multer({ dest: 'uploads/' });
 
 /* This function creates an article and submits it into the database.
- * It then renders the comfirmation.ejs page.
+ * It then reloads the page
  * @param req - the request which contains the form input for the article
- * @param res - the response which renders the confirmation page.
+ * @param res - the response which renders articles page.
  */
 exports.createArticle = function(req, res){
 
@@ -57,7 +57,6 @@ exports.displayArticles = function (req, res){
 		if (err) throw err;
 
 		numRows = result.length;
-		var articleArray = [];
 		for (i = numRows - 1; i >= 0; i--) {
 			var is_active = result[i].is_active == 1 ? "Yes" : "No";
 			articleArray.push({ id: result[i].id, title: result[i].title, author: result[i].author, is_active: is_active });
