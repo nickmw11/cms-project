@@ -101,8 +101,8 @@ exports.editBlog = function (req, res) {
     var blog;
     mysqlConnect.query(query, function (err, result, fields) {
         if (err) throw err;
-        console.log(result);
-        blog = { id: result[0].id, title: result[0].title, author: result[0].author, date: result[0].date, content: result[0].content, is_active: result[0].is_active };
+        var checked = result[0].is_active == 1 ? "checked" : "";
+        blog = { id: result[0].id, title: result[0].title, author: result[0].author, date: result[0].date, content: result[0].content, checked: checked };
         res.render('edit/blogEdit', {
             blog: blog
         });
@@ -117,16 +117,16 @@ exports.submitEdit = function (req, res) {
     var author = req.body.blogAuthor;
     var content = req.body.blogContent;
     var date = req.body.blogDate;
-    
+    var is_active = req.body.is_active == "on" ? 1 : 0;
+
     title = title.replace(/'/g,"''");
     author = author.replace(/'/g,"''");
     content = content.replace(/'/g,"''");
 
-    var updateQuery = "UPDATE blog SET title = '" + title + "', author = '" + author + "', content = '" + content + "', date = '" + date + "' WHERE id = '" + blogID + "';";
-    console.log(updateQuery);
+    var updateQuery = "UPDATE blog SET title = '" + title + "', author = '" + author + "', content = '" + content + "', date = '" + date + "', is_active = '" + is_active + "' WHERE id = '" + blogID + "';";
+
     mysqlConnect.query(updateQuery, function (err, result, fields) {
         if (err) throw err;
-        console.log("after connect");
         res.render('pages/blog');
     });
 }

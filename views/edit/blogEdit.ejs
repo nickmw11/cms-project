@@ -50,6 +50,12 @@
                         </div>
                         <textarea name="blogContent" class="form-control"  aria-label="Default"><%= blog.content %></textarea>
                     </div>
+                    <div class="form-group">
+                        <div class="input-group-prepend">
+                                <span class="input-group-text" id="inputGroup-sizing-default"><b>Publish to front end:</b></span>
+                        </div>
+                        <input type="checkbox" class="form-control" name="is_active" id="is_active" <%= blog.checked %>>
+                    </div>
 
                     <input type="hidden" class="form-control d-none" id="blogID" name="blogID" value=<%= blog.id %> />
                     <div style="margin-top:10px"><button type="submit" class="btn btn-primary">Submit Changes</button></div>
