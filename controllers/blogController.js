@@ -117,6 +117,10 @@ exports.submitEdit = function (req, res) {
     var author = req.body.blogAuthor;
     var content = req.body.blogContent;
     var date = req.body.blogDate;
+    
+    title = title.replace(/'/g,"''");
+    author = author.replace(/'/g,"''");
+    content = content.replace(/'/g,"''");
 
     var updateQuery = "UPDATE blog SET title = '" + title + "', author = '" + author + "', content = '" + content + "', date = '" + date + "' WHERE id = '" + blogID + "';";
     console.log(updateQuery);
