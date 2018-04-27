@@ -34,4 +34,10 @@ router.post('/deleteJobPostings', jobPostingsController.deleteJobPostings);
 // toggle is_active on an job posting
 router.post('/toggleIsActive', jobPostingsController.toggleIsActive);
 
+// edit a job
+router.post('/editJob', jobPostingsController.editJob);
+
+// submit edit to a job
+router.post('/submitEdit', jobPostingsController.submitEdit);
+
 module.exports = router;

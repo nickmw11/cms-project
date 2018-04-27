@@ -1,0 +1,73 @@
+<!-- Filename: jobEdit.ejs
+
+     Description: Contains input forms for a job.
+     Input boxes are populated by a job from the
+     database. On the submit button, the job is
+     updated, and the user is redirected to the
+     job page. On the cancel button, the user is
+     simply redirected to the job postings page.
+-->
+     
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <% include ../partials/head %>
+</head>
+<body class="container">
+
+<header>
+    <% include ../partials/header %>
+</header>
+
+<main>
+    <div class="jumbotron">
+        <div class="row">
+            <div class="col-xs-12">
+                <h1>Edit Job</h1>
+            </div>
+            <div class="col-xs-12">
+                <form method="POST" action="/jobpostings/submitEdit">
+                    <div class="form-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-default"><b>Job Title:</b></span>
+                        </div>
+                        <input type="text" class="form-control d-none" id="jobTitle" name="jobTitle" value="<%= job.title %>" />
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-default"><b>Description:</b></span>
+                        </div>
+                        <textarea name="jobDescription" class="form-control"  aria-label="Default"><%= job.description %></textarea>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-default"><b>Requirements:</b></span>
+                        </div>
+                        <textarea name="jobRequirements" class="form-control"  aria-label="Default"><%= job.requirements %></textarea>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group-prepend">
+                                <span class="input-group-text" id="inputGroup-sizing-default"><b>Publish to front end:</b></span>
+                        </div>
+                        <input type="checkbox" class="form-control" name="is_active" id="is_active" <%= job.checked %>>
+                    </div>
+
+                    <input type="hidden" class="form-control d-none" id="jobID" name="jobID" value=<%= job.id %> />
+                    <div style="margin-top:10px"><button type="submit" class="btn btn-primary">Submit Changes</button></div>
+                </form>
+            </div>
+            <div class="col-xs-12">
+                <form method="GET" action="/jobpostings">
+                    <div style="margin-top:20px"><button type="submit" class="btn btn-primary">Cancel Changes</button></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer>
+  <% include ../partials/footer %>
+</footer>
+
+</body>
+</html>

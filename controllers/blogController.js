@@ -131,13 +131,6 @@ exports.submitEdit = function (req, res) {
     });
 }
 
-/* This function simply redirects the user back to the blog page
- * if the user clicks the cancel button.
- */
-exports.cancelEdit = function (req, res) {
-    res.render('pages/blog');
-}
-
 /* This function toggles the is_active field on the given job posting.
 * @param updateQuery - the query with instructions to update the field.
 */

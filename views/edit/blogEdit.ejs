@@ -62,8 +62,7 @@
                 </form>
             </div>
             <div class="col-xs-12">
-                <form method="POST" action="/blog/cancelEdit">
-                    <input type="hidden" class="form-control d-none" id="blogID" name="blogID" value=<%= blog.id %> />
+                <form method="GET" action="/blog">
                     <div style="margin-top:20px"><button type="submit" class="btn btn-primary">Cancel Changes</button></div>
                 </form>
             </div>

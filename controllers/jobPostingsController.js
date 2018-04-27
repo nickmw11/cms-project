@@ -90,6 +90,46 @@ exports.toggleIsActive = function (req, res){
 	res.render('pages/jobpostings');
 }
 
+/* This displays the edit jobpostings page.
+ * A job with id req.body.jobID has its column values put into the
+ * input boxes in the job page.
+ */
+exports.editJob = function (req, res) {
+
+  var jobID = req.body.jobID;
+  var query = "SELECT * FROM jobpostings WHERE id = " + jobID + ";";
+  var job;
+
+  mysqlConnect.query(query, function (err, result, fields) {
+      if (err) throw err;
+      var checked = result[0].is_active == 1 ? "checked" : "";
+      job = { id: result[0].id, title: result[0].title, description: result[0].description, requirements: result[0].requirements, checked: checked };
+      res.render('edit/jobEdit', {
+        job: job
+      });
+  });
+}
+
+/* This function submits the edited fields into the database, updating the job.
+*/
+exports.submitEdit = function (req, res) {
+  var jobID = req.body.jobID;
+  var title = req.body.jobTitle;
+  var description = req.body.jobDescription;
+  var requirements = req.body.jobRequirements;
+  var is_active = req.body.is_active == "on" ? 1 : 0;
+
+  title = title.replace(/'/g,"''");
+  description = description.replace(/'/g,"''");
+  requirements = requirements.replace(/'/g,"''");
+
+  var updateQuery = "UPDATE jobpostings SET title = '" + title + "', description = '" + description + "', requirements = '" + requirements + "',  is_active = '" + is_active + "' WHERE id = " + jobID + ";";
+  mysqlConnect.query(updateQuery, function (err, result, fields) {
+      if (err) throw err;
+      res.render('pages/jobpostings');
+  });
+}
+
 /* This function toggles the is_active field on the given job posting.
  * @param updateQuery - the query with instructions to update the field.
  */
