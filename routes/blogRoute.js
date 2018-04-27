@@ -28,4 +28,13 @@ router.post('/deleteBlog', blogController.deleteBlog);
 // toggle is_active on a blog
 router.post('/toggleIsActive', blogController.toggleIsActive);
 
+// edit a blog
+router.post('/editBlog', blogController.editBlog);
+
+// submit edit to a blog
+router.post('/submitEdit', blogController.submitEdit);
+
+// submit edit to a blog
+router.post('/cancelEdit', blogController.cancelEdit);
+
 module.exports = router;

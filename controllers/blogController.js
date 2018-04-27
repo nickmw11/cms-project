@@ -20,6 +20,7 @@ exports.createBlog = function(req, res){
     var content = req.body.blogContent;
     var date = req.body.blogDate;
     var is_active = req.body.is_active == "on" ? 1 : 0;
+    console.log(title);
 
     // Replaces single quotes with 2 single quotes so that it won't mess up the query.
     title = title.replace(/'/g,"''");
@@ -54,46 +55,91 @@ exports.displayBlog = function (req, res){
         });
     });
   }
-  /* This function deletes jobpostings from the database based on the id of the job
-   * @param req - contains the id of the article
-   */
-  exports.deleteBlog = function (req, res){
-  
-      var blogID = req.body.blogID;
-      var query = "DELETE FROM blog WHERE id = " + blogID + ";";
-  
-      mysqlConnect.query(query, function (err, result, fields) {
-          if (err) throw err;
-      });
-      res.render('pages/blog');
-  }
-  
-  /* This function toggles whether the job posting should be displayed on the front end website
-   * based on its ID.
-   */
-  exports.toggleIsActive = function (req, res){
-  
+
+/* This function deletes jobpostings from the database based on the id of the job
+* @param req - contains the id of the article
+*/
+exports.deleteBlog = function (req, res){
+
+    var blogID = req.body.blogID;
+    var query = "DELETE FROM blog WHERE id = " + blogID + ";";
+
+    mysqlConnect.query(query, function (err, result, fields) {
+        if (err) throw err;
+    });
+    res.render('pages/blog');
+}
+
+/* This function toggles whether the job posting should be displayed on the front end website
+* based on its ID.
+*/
+exports.toggleIsActive = function (req, res){
+
+var blogID = req.body.blogID;
+var query = "SELECT * FROM blog WHERE id = " + blogID + ";";
+var isActive;
+
+    mysqlConnect.query(query, function (err, result, fields) {
+        if (err) throw err;
+        
+        isActive = result[0].is_active == 1 ? 0 : 1;
+        var updateQuery = "UPDATE blog SET is_active = " + isActive + " WHERE id = " + blogID + ";";
+        toggleIsActiveQuery(updateQuery);
+    });
+
+    res.render('pages/blog');
+}
+
+/* This displays the edit blog page.
+ * A blog with id req.body.blogID has its column values put into the
+ * input boxes in the blogEdit page.
+ */
+exports.editBlog = function (req, res) {
+
     var blogID = req.body.blogID;
     var query = "SELECT * FROM blog WHERE id = " + blogID + ";";
-    var isActive;
-  
-      mysqlConnect.query(query, function (err, result, fields) {
-          if (err) throw err;
-          
-          isActive = result[0].is_active == 1 ? 0 : 1;
-          var updateQuery = "UPDATE blog SET is_active = " + isActive + " WHERE id = " + blogID + ";";
-          toggleIsActiveQuery(updateQuery);
-      });
-  
-      res.render('pages/blog');
-  }
-  
-  /* This function toggles the is_active field on the given job posting.
-   * @param updateQuery - the query with instructions to update the field.
-   */
-  function toggleIsActiveQuery(updateQuery){
-  
-      mysqlConnect.query(updateQuery, function (err, result, fields) {
-          if (err) throw err;
-      });
-  }
+    var blog;
+    mysqlConnect.query(query, function (err, result, fields) {
+        if (err) throw err;
+        console.log(result);
+        blog = { id: result[0].id, title: result[0].title, author: result[0].author, date: result[0].date, content: result[0].content, is_active: result[0].is_active };
+        res.render('edit/blogEdit', {
+            blog: blog
+        });
+    });
+}
+
+/* This function submits the edited fields into the database, updating the blog.
+ */
+exports.submitEdit = function (req, res) {
+    var blogID = req.body.blogID;
+    var title = req.body.blogTitle;
+    var author = req.body.blogAuthor;
+    var content = req.body.blogContent;
+    var date = req.body.blogDate;
+
+    var updateQuery = "UPDATE blog SET title = '" + title + "', author = '" + author + "', content = '" + content + "', date = '" + date + "' WHERE id = '" + blogID + "';";
+    console.log(updateQuery);
+    mysqlConnect.query(updateQuery, function (err, result, fields) {
+        if (err) throw err;
+        console.log("after connect");
+        res.render('pages/blog');
+    });
+}
+
+/* This function simply redirects the user back to the blog page
+ * if the user clicks the cancel button.
+ */
+exports.cancelEdit = function (req, res) {
+    res.render('pages/blog');
+}
+
+/* This function toggles the is_active field on the given job posting.
+* @param updateQuery - the query with instructions to update the field.
+*/
+function toggleIsActiveQuery(updateQuery){
+
+    mysqlConnect.query(updateQuery, function (err, result, fields) {
+        if (err) throw err;
+    });
+}

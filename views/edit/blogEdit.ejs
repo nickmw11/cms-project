@@ -1,0 +1,70 @@
+<!-- Filename: blogEdit.ejs
+
+     Description: Contains input forms for a blog.
+     Input boxes are populated by a blog from the
+     database. On the submit button, the blog is
+     updated, and the user is redirected to the
+     blog page. On the cancel button, the user is
+     simply redirected to the blog page. -->
+     
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <% include ../partials/head %>
+</head>
+<body class="container">
+
+<header>
+    <% include ../partials/header %>
+</header>
+
+<main>
+    <div class="jumbotron">
+        <div class="row">
+            <div class="col-xs-12">
+                <form method="POST" action="/blog/submitEdit">
+                    <div class="form-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-default"><b>Blog Title:</b></span>
+                        </div>
+                        <input type="text" class="form-control d-none" id="blogTitle" name="blogTitle" value="<%= blog.title %>" />
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-default"><b>Author Name:</b></span>
+                        </div>
+                        <input type="text" class="form-control d-none" id="blogAuthor" name="blogAuthor" value="<%= blog.author %>" />
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-default"><b>Date:</b></span>
+                        </div>
+                        <input type="date" class="form-control d-none" id="blogDate" name="blogDate" value=<%= blog.date %> />
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-default"><b>Content:</b></span>
+                        </div>
+                        <textarea name="blogContent" class="form-control"  aria-label="Default"><%= blog.content %></textarea>
+                    </div>
+
+                    <input type="hidden" class="form-control d-none" id="blogID" name="blogID" value=<%= blog.id %> />
+                    <div style="margin-top:10px"><button type="submit" class="btn btn-primary">Submit Changes</button></div>
+                </form>
+            </div>
+            <div class="col-xs-12">
+                <form method="POST" action="/blog/cancelEdit">
+                    <input type="hidden" class="form-control d-none" id="blogID" name="blogID" value=<%= blog.id %> />
+                    <div style="margin-top:20px"><button type="submit" class="btn btn-primary">Cancel Changes</button></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer>
+  <% include ../partials/footer %>
+</footer>
+
+</body>
+</html>
