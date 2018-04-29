@@ -5,6 +5,9 @@
 
 // mysql connection
 var mysqlConnect = require('../config/database.js');
+const fileUpload = require('express-fileupload');
+var multer  = require('multer');
+var upload  = multer({ dest: 'uploads/' });
 
 /* This function creates an employee and submits it into the database.
  * It then reloads the page
@@ -13,17 +16,25 @@ var mysqlConnect = require('../config/database.js');
  */
 exports.createAbout = function(req, res) {
 
-    var image = req.body.staffImage;
+    if (req.file) {
+		console.log(req.file.originalname);
+		var staffImage = req.file.originalname;
+	}
+	else {
+		var staffImage = 'noimage.png';
+	}
     var name = req.body.staffName;
     var bio = req.body.staffBio;
+    console.log("staff image: " + staffImage);
+
     var is_active = req.body.is_active == "on" ? 1 : 0;
 
     // Replaces single quotes with 2 single quotes so that it won't mess up the query.
-    image = image.replace(/'/g,"''");
+    //image = image.replace(/'/g,"''");
     name = name.replace(/'/g,"''");
     bio = bio.replace(/'/g,"''");
 
-    var query = "INSERT INTO about (image, name, bio, is_active) VALUES ('" + image + "','" + name + "','" + bio + "','" + is_active + "');";
+    var query = "INSERT INTO about (image, name, bio, is_active) VALUES ('" + staffImage + "','" + name + "','" + bio + "','" + is_active + "');";
     mysqlConnect.query(query, function (err, result, fields) {
         if (err) throw err;
         else res.render("pages/about");
