@@ -21,7 +21,7 @@ exports.createArticle = function(req, res){
 	var author = req.body.articleAuthor;
 	var content = req.body.articleContent;
 	var date = req.body.articleDate;
-	console.log(req.file);
+
 	if (req.file) {
 		console.log(req.file.originalname);
 		var articleImage = req.file.originalname;
@@ -113,8 +113,8 @@ exports.editArticle = function (req, res) {
     mysqlConnect.query(query, function (err, result, fields) {
         if (err) throw err;
 		var checked = result[0].is_active == 1 ? "checked" : "";
-		console.log(result[0].date);
-        article = { id: result[0].id, title: result[0].title, author: result[0].author, date: result[0].date, content: result[0].content, checked: checked };
+		console.log(result[0].image);
+        article = { id: result[0].id, title: result[0].title, author: result[0].author, date: result[0].date, content: result[0].content, image: result[0].image, checked: checked };
         res.render('edit/articleEdit', {
             article: article
         });
@@ -129,13 +129,21 @@ exports.submitEdit = function (req, res) {
     var author = req.body.articleAuthor;
     var content = req.body.articleContent;
     var date = req.body.articleDate;
-    var is_active = req.body.is_active == "on" ? 1 : 0;
+	var is_active = req.body.is_active == "on" ? 1 : 0;
+	var articleImage;
+	if (req.file) {
+		console.log(req.file.originalname);
+		articleImage = req.file.originalname;
+	}
+	else {
+		var articleImage = 'noimage.png';
+	}
 
     title = title.replace(/'/g,"''");
     author = author.replace(/'/g,"''");
     content = content.replace(/'/g,"''");
 
-    var updateQuery = "UPDATE articles SET title = '" + title + "', author = '" + author + "', content = '" + content + "', date = '" + date + "', is_active = '" + is_active + "' WHERE id = '" + articleID + "';";
+    var updateQuery = "UPDATE articles SET title = '" + title + "', author = '" + author + "', content = '" + content + "', date = '" + date + "', image = '" + articleImage + "', is_active = '" + is_active + "' WHERE id = '" + articleID + "';";
 
     mysqlConnect.query(updateQuery, function (err, result, fields) {
         if (err) throw err;

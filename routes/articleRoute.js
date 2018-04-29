@@ -50,6 +50,6 @@ router.post('/toggleIsActive', articleController.toggleIsActive);
 router.post('/editArticle', articleController.editArticle);
 
 // submit edit to a article
-router.post('/submitEdit', articleController.submitEdit);
+router.post('/submitEdit', upload.single('articleImage'), articleController.submitEdit);
 
 module.exports = router;
