@@ -1,0 +1,67 @@
+<!-- Filename: aboutEdit.ejs
+
+     Description: Contains input forms for an employee.
+     Input boxes are populated by an employee from the
+     database. On the submit button, the employee is
+     updated, and the user is redirected to the
+     about page. On the cancel button, the user is
+     simply redirected to the about page.
+-->
+     
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <% include ../partials/head %>
+</head>
+<body class="container">
+
+<header>
+    <% include ../partials/header %>
+</header>
+
+<main>
+    <div class="jumbotron">
+        <div class="row">
+            <div class="col-xs-12">
+                <h1>Edit About</h1>
+            </div>
+            <div class="col-xs-12">
+                <form method="POST" action="/about/submitEdit">
+                    <div class="form-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-default"><b>Name:</b></span>
+                        </div>
+                        <input type="text" class="form-control d-none" id="aboutName" name="aboutName" value="<%= about.name %>" />
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-default"><b>Bio:</b></span>
+                        </div>
+                        <textarea name="aboutBio" class="form-control"  aria-label="Default"><%= about.bio %></textarea>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group-prepend">
+                                <span class="input-group-text" id="inputGroup-sizing-default"><b>Publish to front end:</b></span>
+                        </div>
+                        <input type="checkbox" class="form-control" name="is_active" id="is_active" <%= about.checked %>>
+                    </div>
+
+                    <input type="hidden" class="form-control d-none" id="aboutID" name="aboutID" value=<%= about.id %> />
+                    <div style="margin-top:10px"><button type="submit" class="btn btn-primary">Submit Changes</button></div>
+                </form>
+            </div>
+            <div class="col-xs-12">
+                <form method="GET" action="/about">
+                    <div style="margin-top:20px"><button type="submit" class="btn btn-primary">Cancel Changes</button></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer>
+  <% include ../partials/footer %>
+</footer>
+
+</body>
+</html>

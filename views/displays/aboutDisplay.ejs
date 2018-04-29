@@ -17,6 +17,10 @@
                     <input type="hidden" class="form-control d-none" id="aboutID" name="aboutID" value=<%= about.id %> />
                     <div style="margin-top:10px"><button type="submit" class="btn btn-default">Toggle</button></div>
                 </form>
+                <form method="POST" action="/about/editAbout">
+                    <input type="hidden" class="form-control d-none" id="aboutID" name="aboutID" value=<%= about.id %> />
+                    <div style="margin-top:10px"><button type="submit" class="btn btn-default">Edit</button></div>
+                </form>
             </div>
         </div>
         <br />

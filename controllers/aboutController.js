@@ -84,6 +84,44 @@ exports.toggleIsActive = function (req, res){
 	res.render('pages/about');
 }
 
+/* This displays the edit about page.
+ * An employee with id req.body.aboutID has its column values put into the
+ * input boxes in the about page.
+ */
+exports.editAbout = function (req, res) {
+
+  var aboutID = req.body.aboutID;
+  var query = "SELECT * FROM about WHERE id = " + aboutID + ";";
+  var about;
+
+  mysqlConnect.query(query, function (err, result, fields) {
+      if (err) throw err;
+      var checked = result[0].is_active == 1 ? "checked" : "";
+      about = { id: result[0].id, name: result[0].name, bio: result[0].bio, checked: checked };
+      res.render('edit/aboutEdit', {
+        about: about
+      });
+  });
+}
+
+/* This function submits the edited fields into the database, updating the employee.
+*/
+exports.submitEdit = function (req, res) {
+  var aboutID = req.body.aboutID;
+  var name = req.body.aboutName;
+  var bio = req.body.aboutBio;
+  var is_active = req.body.is_active == "on" ? 1 : 0;
+
+  name = name.replace(/'/g,"''");
+  bio = bio.replace(/'/g,"''");
+
+  var updateQuery = "UPDATE about SET name = '" + name + "', bio = '" + bio + "',  is_active = '" + is_active + "' WHERE id = " + aboutID + ";";
+  mysqlConnect.query(updateQuery, function (err, result, fields) {
+      if (err) throw err;
+      res.render('pages/about');
+  });
+}
+
 /* This function toggles the is_active field on the given article.
  * @param updateQuery - the query with instructions to update the field.
  */
