@@ -21,8 +21,10 @@ exports.createArticle = function(req, res){
 	var author = req.body.articleAuthor;
 	var content = req.body.articleContent;
 	var date = req.body.articleDate;
+	console.log(req.file);
 	if (req.file) {
-	var articleImage = req.file.originalname;
+		console.log(req.file.originalname);
+		var articleImage = req.file.originalname;
 	}
 	else {
 		var articleImage = 'noimage.png';
@@ -96,6 +98,49 @@ exports.toggleIsActive = function (req, res){
 	});
 
 	res.render('pages/article');
+}
+
+/* This displays the edit article page.
+ * A article with id req.body.articleID has its column values put into the
+ * input boxes in the articleEdit page.
+ */
+exports.editArticle = function (req, res) {
+
+    var articleID = req.body.articleID;
+    var query = "SELECT * FROM articles WHERE id = " + articleID + ";";
+	var article;
+	
+    mysqlConnect.query(query, function (err, result, fields) {
+        if (err) throw err;
+		var checked = result[0].is_active == 1 ? "checked" : "";
+		console.log(result[0].date);
+        article = { id: result[0].id, title: result[0].title, author: result[0].author, date: result[0].date, content: result[0].content, checked: checked };
+        res.render('edit/articleEdit', {
+            article: article
+        });
+    });
+}
+
+/* This function submits the edited fields into the database, updating the article.
+ */
+exports.submitEdit = function (req, res) {
+    var articleID = req.body.articleID;
+    var title = req.body.articleTitle;
+    var author = req.body.articleAuthor;
+    var content = req.body.articleContent;
+    var date = req.body.articleDate;
+    var is_active = req.body.is_active == "on" ? 1 : 0;
+
+    title = title.replace(/'/g,"''");
+    author = author.replace(/'/g,"''");
+    content = content.replace(/'/g,"''");
+
+    var updateQuery = "UPDATE articles SET title = '" + title + "', author = '" + author + "', content = '" + content + "', date = '" + date + "', is_active = '" + is_active + "' WHERE id = '" + articleID + "';";
+
+    mysqlConnect.query(updateQuery, function (err, result, fields) {
+        if (err) throw err;
+        res.render('pages/article');
+    });
 }
 
 /* This function toggles the is_active field on the given article.

@@ -1,0 +1,78 @@
+<!-- Filename: articleEdit.ejs
+
+     Description: Contains input forms for a article.
+     Input boxes are populated by a article from the
+     database. On the submit button, the article is
+     updated, and the user is redirected to the
+     article page. On the cancel button, the user is
+     simply redirected to the article page. -->
+     
+     <!DOCTYPE html>
+     <html lang="en">
+     <head>
+         <% include ../partials/head %>
+     </head>
+     <body class="container">
+     
+     <header>
+         <% include ../partials/header %>
+     </header>
+     
+     <main>
+         <div class="jumbotron">
+             <div class="row">
+                 <div class="col-xs-12">
+                     <h1>Edit Article</h1>
+                 </div>
+                 <div class="col-xs-12">
+                     <form method="POST" action="/article/submitEdit">
+                         <div class="form-group">
+                             <div class="input-group-prepend">
+                                 <span class="input-group-text" id="inputGroup-sizing-default"><b>Article Title:</b></span>
+                             </div>
+                             <input type="text" class="form-control d-none" id="articleTitle" name="articleTitle" value="<%= article.title %>" />
+                         </div>
+                         <div class="form-group">
+                             <div class="input-group-prepend">
+                                 <span class="input-group-text" id="inputGroup-sizing-default"><b>Author Name:</b></span>
+                             </div>
+                             <input type="text" class="form-control d-none" id="articleAuthor" name="articleAuthor" value="<%= article.author %>" />
+                         </div>
+                         <div class="form-group">
+                             <div class="input-group-prepend">
+                                 <span class="input-group-text" id="inputGroup-sizing-default"><b>Date:</b></span>
+                             </div>
+                             <input type="date" class="form-control d-none" id="articleDate" name="articleDate" value=<%= article.date %> />
+                         </div>
+                         <div class="form-group">
+                             <div class="input-group-prepend">
+                                 <span class="input-group-text" id="inputGroup-sizing-default"><b>Content:</b></span>
+                             </div>
+                             <textarea name="articleContent" class="form-control"  aria-label="Default"><%= article.content %></textarea>
+                         </div>
+                         <div class="form-group">
+                             <div class="input-group-prepend">
+                                     <span class="input-group-text" id="inputGroup-sizing-default"><b>Publish to front end:</b></span>
+                             </div>
+                             <input type="checkbox" class="form-control" name="is_active" id="is_active" <%= article.checked %>>
+                         </div>
+     
+                         <input type="hidden" class="form-control d-none" id="articleID" name="articleID" value=<%= article.id %> />
+                         <div style="margin-top:10px"><button type="submit" class="btn btn-primary">Submit Changes</button></div>
+                     </form>
+                 </div>
+                 <div class="col-xs-12">
+                     <form method="GET" action="/article">
+                         <div style="margin-top:20px"><button type="submit" class="btn btn-primary">Cancel Changes</button></div>
+                     </form>
+                 </div>
+             </div>
+         </div>
+     </main>
+     
+     <footer>
+       <% include ../partials/footer %>
+     </footer>
+     
+     </body>
+     </html>

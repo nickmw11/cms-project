@@ -14,7 +14,7 @@
             <div class="jumbotron">
                     <h1>Create a Article</h1>
                     <p>Type in the information you would like to post, then click Submit.</p>
-                  <form method="POST" action="/article/submitArticle">
+                  <form method="POST" action="/article/submitArticle" enctype="multipart/form-data">
                     <fieldset>
                         <!-- Box for post author -->
                         <div class="form-group">
@@ -41,6 +41,10 @@
                         <div class="form-group">
                             <label for="articleDate">Date:  </label>
                             <input type="date" class="form-control" name="articleDate" id="articleDate">
+                        </div>
+                        <div class="form-group">
+                            <label for="articleImage">Article Image:  </label>
+                            <input type="file" class="form-control" name="articleImage" id="articleImage">
                         </div>
                         <div class="form-group">
                             <label for="is_active">Publish to database:  </label>

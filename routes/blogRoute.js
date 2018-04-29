@@ -3,7 +3,9 @@
  * /submitBlog: submits a blog to the database
  * /displayBlog: displays all blogs from the database in a preview panel on the blog page
  * /deleteBlog: deletes a blog from the database
- * /toggleIsActive: toggles whether or not a blog is displayed on the fron end.
+ * /toggleIsActive: toggles whether or not a blog is displayed on the front end.
+ * /editBlog: redirects the user to a page to edit a blog.
+ * /submitEdit: submits the edited blog to the database.
  */
 
 var express = require('express');
